@@ -1,26 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import ActionFn from 'store/actions';
 
-import BtnInvitePopup from 'pages/catalog/parts/cardsItem/BtnInvitePopup';
+import BtnInvite from 'pages/catalog/parts/cardsItem/BtnInvite';
 
 const InvitedPopup = (props) => {
 
+  const [isActiveIndex, setIsActiveIndex] = useState(false);
+
+  useEffect(() => {
+
+    if (props.currentItem) {
+
+      const allInvite = props.currentItem.data.idInvite;
+
+      const currentInvite = allInvite.filter(item => item.idUser === props.uid);
+
+      if (currentInvite.length) {
+        setIsActiveIndex(currentInvite[0].numInvite);
+        props.ActionFn('CHOISE_INVITE', currentInvite[0].numInvite);
+      } else {
+        setIsActiveIndex(false);
+      }
+
+    }
+
+
+
+  }, [props.currentItem, props.openInvitePopup])
+
   const closePopup = () => {
     props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
+    props.ActionFn('CHANGE_INVITE', false);
   }
 
 
-  const [isActiveIndex, setIsActiveIndex] = useState(0);
 
 
   const choiseIdInvite = (id, index) => {
 
 
-    setIsActiveIndex(index);
-
-
+    setIsActiveIndex(id);
     props.ActionFn('CHOISE_INVITE', id);
 
   }
@@ -28,7 +49,7 @@ const InvitedPopup = (props) => {
   return (
 
     <div className={`popup popup-invite element-show ${props.openInvitePopup.status === 1 ? 'show' : ''}`}>
-
+      { }
       <div className="popup-overlay"></div>
       <div className="popup-container">
         <div className="close-btn close-js" onClick={closePopup}></div>
@@ -40,7 +61,7 @@ const InvitedPopup = (props) => {
           <ul className="invite-list-container ln">
             {props.ownCards && props.ownCards.map((item, index) => (
               <li
-                className={`${isActiveIndex === index ? 'active' : ''} invite-list`}
+                className={`${isActiveIndex === item.id ? 'active' : ''} invite-list`}
                 key={item.id}
                 onClick={() => { choiseIdInvite(item.id, index) }}
               >
@@ -54,7 +75,7 @@ const InvitedPopup = (props) => {
               Отмена
             </div>
             {props.currentItem &&
-              (<BtnInvitePopup
+              (<BtnInvite
                 listing={props.currentItem}
               />)
             }
@@ -70,11 +91,12 @@ const InvitedPopup = (props) => {
 
 
 const mapStateToProps = (state) => {
-
+  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
   return {
     openInvitePopup: state.popupReducer.openInvitePopup,
     ownCards: state.accountInfo.ownCards,
     currentItem: state.popupReducer.openInvitePopup.currentItem,
+    uid: uid,
 
   }
 }

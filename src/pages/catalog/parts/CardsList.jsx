@@ -21,13 +21,13 @@ const List = (props) => {
   const params = useParams();
 
   useEffect(() => {
-
+    console.log('updateList')
     getListing(props.listingType).then(res => {
       setListings(res);
       setLoading(false);
     });
 
-  }, [props.listingType]);
+  }, [props.listingType, props.changeInvite]);
 
   return (
 
@@ -67,6 +67,7 @@ const mapStateToProps = (state) => {
 
   return {
     listingType: state.listingTypeReducer,
+    changeInvite: state.popupReducer.changeInvite
   }
 }
 

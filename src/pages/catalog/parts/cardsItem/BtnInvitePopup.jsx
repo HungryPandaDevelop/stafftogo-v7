@@ -27,25 +27,25 @@ const BtnInvitePopup = (props) => {
   }, [numInvite]);
 
 
-
+  //setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
   const addInvite = () => {
 
     if (inviteMass.length > 0) {
       inviteMass.map(item => {
-        if (item.numInvite === numInvite) {
+        if (item.idUser === uid && item.numInvite === numInvite) {
 
           setInviteMass(inviteMass.filter(item => item.idUser !== uid));
 
           setInvited(false)
         } else {
 
-          setInviteMass([...inviteMass, { idUser: uid, numInvite: numInvite, status: 'view' }]);
+          setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
 
           setInvited(true);
         }
       });
     } else {
-      setInviteMass([...inviteMass, { idUser: uid, numInvite: numInvite, status: 'view' }]);
+      setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
 
       setInvited(true);
     }

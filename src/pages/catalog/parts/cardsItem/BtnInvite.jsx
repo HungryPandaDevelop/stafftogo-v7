@@ -5,7 +5,7 @@ import ActionFn from 'store/actions';
 
 
 const BtnInvite = (props) => {
-  const { listing, listingType, numInvite, uid } = props;
+  const { listing, listingType, numInvite, uid, ownCards } = props;
   const [invited, setInvited] = useState(false);
   const [inviteMass, setInviteMass] = useState(false);
 
@@ -13,53 +13,78 @@ const BtnInvite = (props) => {
 
   useEffect(() => {
 
-    if (listing.data.idInvite) {
+    // console.log('start', listing.data.idInvite.length)
+
+
+    if (listing.data.idInvite && listing.data.idInvite.length !== undefined && props.uid) {
+
+      const currentInvite = listing.data.idInvite.filter(item => item.idUser === props.uid);
+
+      //console.log('start', currentInvite[0].numInvite, numInvite)
+      // console.log('start in if', currentInvite, listing.data.idInvite)
+      if (currentInvite.length > 0) {
+        if (currentInvite[0].numInvite === numInvite) {
+          setInvited(true);
+        }
+        else {
+          setInvited(false);
+        }
+      }
+
+      //console.log('currentInvite', listing.data.card_name, currentInvite);
+
       setInviteMass(listing.data.idInvite);
     }
 
-    if ((listing.data.idInvite.length > 0) && listing.data.idInvite[0].numInvite === numInvite) {
+
+
+    // вкл кнопки, если есть id
+
+  }, [ownCards]);
+
+
+  //setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
+  const addInvite = () => {
+
+
+    props.ActionFn('CHANGE_INVITE', true);
+    console.log('inviteMass.length', inviteMass.length)
+    if (inviteMass.length === undefined || inviteMass.length === 0) {
+      setInviteMass([{ idUser: uid, numInvite: numInvite, status: 'view' }]);
       setInvited(true);
     }
     else {
-      setInvited(false);
-    } // вкл кнопки, если есть id
-
-  }, [numInvite]);
-
-
-
-  const addInvite = () => {
-
-    if (inviteMass.length > 0) {
+      // console.log('1');
       inviteMass.map(item => {
-        if (item.numInvite === numInvite) {
+        if (item.idUser === uid && item.numInvite === numInvite) {
 
-          setInviteMass(inviteMass.filter(item => item.numInvite !== numInvite));
+          setInviteMass(inviteMass.filter(item => item.idUser !== uid));
 
           setInvited(false)
         } else {
 
-          setInviteMass([...inviteMass, { idUser: uid, numInvite: numInvite, status: 'view' }]);
+          // console.log('2');
+          setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
 
           setInvited(true);
         }
       });
-    } else {
-      setInviteMass([...inviteMass, { idUser: uid, numInvite: numInvite, status: 'view' }]);
+    } /*else {
+      // console.log('3');
+      setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
 
       setInvited(true);
-    }
+    }*/
 
     // 3
     setInviteMass((state) => {
-      console.log('inviteMass', state, numInvite);
 
       //console.log('state', state)
       addInviteAsync(state, idElement, listingType);
       return state;
     });
-
   }
+
 
 
   return (
@@ -76,6 +101,7 @@ const BtnInvite = (props) => {
 const mapStateToProps = (state) => {
   const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
   return {
+    ownCards: state.accountInfo.ownCards,
     listingType: state.listingTypeReducer,
     numInvite: state.popupReducer.idInvite,
     uid: uid

@@ -13,7 +13,6 @@ import { toast } from 'react-toastify';
 
 export const addLikeAsync = async (idLike, cardsId, name) => {
 
-  console.log('add like')
     try {
 
       const vacanciesRef = doc(db, name, cardsId);

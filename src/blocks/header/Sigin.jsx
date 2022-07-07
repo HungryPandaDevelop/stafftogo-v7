@@ -48,10 +48,14 @@ const HeadProfile = (props) => {
 
       setTypeList((state) => {
         getListing(state, 'user').then(res => {
+          props.ActionFn('CHOISE_INVITE', res[0].id);
           props.ActionFn('SET_OWN_CARDS', res);
           setListings(res);
+          //console.log('res', res[0].id)
+          // if (res.length === 0) {
 
-          props.ActionFn('CHOISE_INVITE', res[0].id);
+          // }
+
           setLoading(false);
         });
         return state;
