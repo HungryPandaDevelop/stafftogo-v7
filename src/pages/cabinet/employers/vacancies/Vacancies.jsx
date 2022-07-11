@@ -5,7 +5,7 @@ import { getListing, onDelete } from 'store/asyncActions/getListing';
 
 import CardItemVacancies from 'pages/cabinet/parts/cards/CardItemVacancies';
 
-import TemplateAccount from 'components/template/TemplateAccount';
+import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
 
 const Vacancies = (props) => {

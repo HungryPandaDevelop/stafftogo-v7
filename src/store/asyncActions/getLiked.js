@@ -25,11 +25,11 @@ export const getLiked = async (name, user) => {
 
   const auth = getAuth();
   
-  const listingsRef = collection(db, 'resume');
+  const listingsRef = collection(db, name);
   
   let q = query(
       listingsRef,
-      where("idLike", "array-contains", "Ks8AALPMJ0MkLl888A9jSBr2IaC3"),
+      where("idLike", "array-contains", user),
       //where('idLike', '==', 'Ks8AALPMJ0MkLl888A9jSBr2IaC3'),
       // where('userRef', '==', 'YpguqFwp1YeEFrQlQeJHaRWVKar1'),
       // orderBy('timestamp', 'desc'),

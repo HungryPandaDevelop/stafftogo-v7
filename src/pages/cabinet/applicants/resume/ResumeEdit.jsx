@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
-import TemplateAccount from 'components/template/TemplateAccount';
+import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 import RenderFormAccount from 'components/forms/RenderFormAccount';
 
 import { useParams } from 'react-router-dom';

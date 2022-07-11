@@ -34,11 +34,6 @@ const List = (props) => {
     <>
       <InvitedPopup />
 
-      {/* <BtnInvite
-                listing={listing}
-                idElement={idElement}
-                listingType={listingType}
-              /> */}
       {loading ? 'loading' : listings && listings.length > 0 ? (
 
         <ul className='ln'>

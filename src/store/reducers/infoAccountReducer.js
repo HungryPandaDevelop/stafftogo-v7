@@ -7,6 +7,8 @@ export default (state={}, action) => {
       return {...state, uid: action.payload}
     case 'SET_OWN_CARDS':
       return {...state, ownCards: action.payload}
+    case 'SET_OWN_TYPE':
+      return {...state, ownType: action.payload}
     default: 
       return state
   }

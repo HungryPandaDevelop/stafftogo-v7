@@ -35,6 +35,8 @@ const CabinetSidebar = () => {
   const NameMassEmployers = [
     ['Мои реквизиты', 'account', ''],
     ['Мои вакансии', 'vacancies', 'vacancies'],
+    ['Мне понравилось', 'vacancies', 'liked'],
+    ['Мне отклики', 'vacancies', 'invited'],
     // ['Мои реквизиты', 'requisites', 'requisites'],
     // ['Мои отклики', 'respond', 'responses'],
     // ['Мои кандидаты', 'candidates', 'candidates'],
@@ -46,7 +48,8 @@ const CabinetSidebar = () => {
   const NameMassApplicants = [
     ['Мой кабинет', 'account', ''],
     ['Мои резюме', 'vacancies', 'resume'],
-    ['Мне понравилось', 'score', 'liked'],
+    ['Мне понравилось', 'vacancies', 'liked'],
+    ['Мои отклики', 'vacancies', 'invited'],
     // ['Мои реквизиты', 'requisites', 'requisites'],
     // ['Мои отклики', 'respond', 'responses'],
     // ['Мои кандидаты', 'candidates', 'candidates'],

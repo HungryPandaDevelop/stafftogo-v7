@@ -13,7 +13,7 @@ import { getUserInfo } from 'store/asyncActions/getUserInfo';
 
 import { addResume } from 'store/asyncActions/addResume';
 
-import TemplateAccount from 'components/template/TemplateAccount';
+import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
 import RenderFormAccount from 'components/forms/RenderFormAccount';
 

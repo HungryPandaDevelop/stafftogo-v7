@@ -48,13 +48,12 @@ const BtnInvite = (props) => {
 
 
     props.ActionFn('CHANGE_INVITE', true);
-    console.log('inviteMass.length', inviteMass.length)
+    // console.log('inviteMass.length', inviteMass.length)
     if (inviteMass.length === undefined || inviteMass.length === 0) {
       setInviteMass([{ idUser: uid, numInvite: numInvite, status: 'view' }]);
       setInvited(true);
     }
     else {
-      // console.log('1');
       inviteMass.map(item => {
         if (item.idUser === uid && item.numInvite === numInvite) {
 
@@ -69,20 +68,20 @@ const BtnInvite = (props) => {
           setInvited(true);
         }
       });
-    } /*else {
-      // console.log('3');
-      setInviteMass([...inviteMass.filter(item => item.idUser !== uid), { idUser: uid, numInvite: numInvite, status: 'view' }]);
+    }
 
-      setInvited(true);
-    }*/
 
-    // 3
     setInviteMass((state) => {
 
       //console.log('state', state)
       addInviteAsync(state, idElement, listingType);
       return state;
     });
+
+    setTimeout(function () {
+      props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
+    }, 1000);
+
   }
 
 

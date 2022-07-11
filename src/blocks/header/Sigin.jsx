@@ -40,16 +40,22 @@ const HeadProfile = (props) => {
       if (res.data.typeCabinet === 'employers') {
         setTypeList('vacancies');
         setTypeName('Вакансии');
+        props.ActionFn('SET_OWN_TYPE', 'resume');
 
       } else {
         setTypeList('resume');
         setTypeName('Резюме');
+        props.ActionFn('SET_OWN_TYPE', 'vacancies');
       }
+
+
 
       setTypeList((state) => {
         getListing(state, 'user').then(res => {
           props.ActionFn('CHOISE_INVITE', res[0].id);
           props.ActionFn('SET_OWN_CARDS', res);
+
+
           setListings(res);
           //console.log('res', res[0].id)
           // if (res.length === 0) {

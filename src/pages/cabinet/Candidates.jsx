@@ -1,4 +1,4 @@
-import TemplateAccount from 'components/template/TemplateAccount';
+import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
 const Requisites = () => {
   return (

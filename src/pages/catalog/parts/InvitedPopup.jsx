@@ -44,48 +44,49 @@ const InvitedPopup = (props) => {
     setIsActiveIndex(id);
     props.ActionFn('CHOISE_INVITE', id);
 
+    // props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
   }
 
   return (
+    <>
+      {props.openInvitePopup.status === 1 && (
+        <div className="popup popup-invite element-show show">
+          <div className="popup-overlay"></div>
+          <div className="popup-container">
+            <div className="close-btn close-js" onClick={closePopup}></div>
+            <div>
+              <h2>Отклик на вакансию: {props.currentItem.data.card_name}</h2>
+              <div>
+                <b>Вакансии для отклика</b>
+              </div>
+              <ul className="invite-list-container ln">
+                {props.ownCards && props.ownCards.map((item, index) => (
+                  <li
+                    className={`${isActiveIndex === item.id ? 'active' : ''} invite-list`}
+                    key={item.id}
+                    onClick={() => { choiseIdInvite(item.id, index) }}
+                  >
+                    <h3><i></i><span>{item.data.card_name}</span></h3>
 
-    <div className={`popup popup-invite element-show ${props.openInvitePopup.status === 1 ? 'show' : ''}`}>
-      { }
-      <div className="popup-overlay"></div>
-      <div className="popup-container">
-        <div className="close-btn close-js" onClick={closePopup}></div>
-        <div>
-          {props.currentItem && (<h2>Отклик на вакансию: {props.currentItem.card_name}</h2>)}
-          <div>
-            <b>Вакансии для отклика</b>
-          </div>
-          <ul className="invite-list-container ln">
-            {props.ownCards && props.ownCards.map((item, index) => (
-              <li
-                className={`${isActiveIndex === item.id ? 'active' : ''} invite-list`}
-                key={item.id}
-                onClick={() => { choiseIdInvite(item.id, index) }}
-              >
-                <h3><i></i><span>{item.data.card_name}</span></h3>
+                  </li>
+                ))}
+              </ul>
+              <div className="btn-container">
+                <div className="btn btn--border">
+                  Отмена
+                </div>
+                <BtnInvite
+                  listing={props.currentItem}
+                />
 
-              </li>
-            ))}
-          </ul>
-          <div className="btn-container">
-            <div className="btn btn--border">
-              Отмена
+
+              </div>
             </div>
-            {props.currentItem &&
-              (<BtnInvite
-                listing={props.currentItem}
-              />)
-            }
-
-
           </div>
-        </div>
-      </div>
 
-    </div >
+        </div >
+      )}
+    </>
   )
 }
 

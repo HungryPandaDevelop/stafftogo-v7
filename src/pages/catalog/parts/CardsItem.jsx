@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
 
 import BtnLike from './cardsItem/BtnLike';
 import BtnInvite from './cardsItem/BtnInvite';
@@ -9,7 +10,8 @@ const ListItem = (props) => {
   const {
     listing,
     link,
-
+    listingType,
+    ownType
   } = props;
 
   const listingData = listing.data;
@@ -61,22 +63,18 @@ const ListItem = (props) => {
               <li><a href="/"><i className="marker-ico--black"></i><span>Показать на карте</span></a></li>
             </ul>
 
-            <div className="btn-container">
+            {(listingType === ownType) && <>
+              <div className="btn-container">
 
-              <BtnLike
-                listing={listing}
-              />
-              <BtnOpenInvite
-                listing={listing}
-              />
-
-              <BtnInvite
-                listing={listing}
-              />
+                <BtnLike
+                  listing={listing}
+                />
+                {props.ownCards && props.ownCards.length > 1 ? <BtnOpenInvite listing={listing} /> : <BtnInvite listing={listing} />}
+              </div></>
+            }
 
 
 
-            </div>
           </div>
         </div>
       </div>
@@ -84,4 +82,13 @@ const ListItem = (props) => {
   )
 }
 
-export default ListItem;
+const mapStateToProps = (state) => {
+
+  return {
+    ownCards: state.accountInfo.ownCards,
+    ownType: state.accountInfo.ownType,
+  }
+}
+
+
+export default connect(mapStateToProps)(ListItem);

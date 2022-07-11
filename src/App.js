@@ -31,7 +31,8 @@ import ResumeNew from 'pages/cabinet/applicants/resume/ResumeNew';
 import ResumeEdit from 'pages/cabinet/applicants/resume/ResumeEdit';
 // Страницы кабинет Соискателя
 
-import Liked from 'pages/cabinet/applicants/Liked';
+import Liked from 'pages/cabinet/default/Liked';
+import Invited from 'pages/cabinet/default/Invited';
 
 // Страницы Елементов Вакансии\ Резюме
 import Catalog from 'pages/catalog/Catalog';
@@ -69,6 +70,7 @@ const App = () => {
 
 
               <Route path='/cabinet/liked/' element={<Liked/>}></Route>
+              <Route path='/cabinet/Invited/' element={<Invited/>}></Route>
 
             </Route>
           {/*  Страницы кабинет  */}

@@ -1,4 +1,4 @@
-import CabinetSidebar from 'components/cabinet/CabinetSidebar';
+import CabinetSidebar from 'pages/cabinet/parts/CabinetSidebar';
 
 const TemplateAccount = ({ title, children, rightSibar }) => {
   return (

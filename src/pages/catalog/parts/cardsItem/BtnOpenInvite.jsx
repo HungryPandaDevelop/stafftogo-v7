@@ -14,7 +14,7 @@ const BtnOpenInvite = (props) => {
         className="btn btn--green"
         onClick={openInvitePopup}
       >
-        Окрыть попап
+        Откликнулись
       </div>
     </>
   )
