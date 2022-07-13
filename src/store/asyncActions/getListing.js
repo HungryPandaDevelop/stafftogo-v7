@@ -32,7 +32,7 @@ export const getListing = async (name, user) => {
 
     q = query(
       listingsRef,
-      // where('userRef', '==', auth.currentUser.uid),
+      where('userRef', '==', auth.currentUser.uid),
       orderBy('timestamp', 'desc'),
       // limit(2)
     );

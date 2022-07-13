@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 
 import { getListing } from 'store/asyncActions/getListing';
@@ -8,7 +8,6 @@ import { getListing } from 'store/asyncActions/getListing';
 
 import CardsItem from 'pages/catalog/parts/CardsItem';
 
-import InvitedPopup from 'pages/catalog/parts/InvitedPopup';
 
 const List = (props) => {
 
@@ -18,13 +17,12 @@ const List = (props) => {
 
   const [loading, setLoading] = useState(true);
 
-  const params = useParams();
-
   useEffect(() => {
-    console.log('updateList')
+    // console.log('start', props.listingType)
     getListing(props.listingType).then(res => {
+
       setListings(res);
-      setLoading(false);
+
     });
 
   }, [props.listingType, props.changeInvite]);
@@ -32,10 +30,9 @@ const List = (props) => {
   return (
 
     <>
-      <InvitedPopup />
+      {/* {console.log('render list')} */}
 
-      {loading ? 'loading' : listings && listings.length > 0 ? (
-
+      {listings && listings.length > 0 ? (
         <ul className='ln'>
           {listings.map((listing) => (
             <CardsItem
@@ -50,7 +47,7 @@ const List = (props) => {
           ))}
         </ul>
       ) : (
-        <p>Нет элементов {params.catagoryName}</p>
+        <p>Нет элементов</p>
       )}
     </>
   )
@@ -69,3 +66,4 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps)(List);
+// export default List;

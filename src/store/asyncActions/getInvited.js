@@ -10,53 +10,27 @@ import {
 import { db } from 'firebase.config';
 
 
-export const getInvited = async (name, user) => {
+// SG9nl2Xt8TYhhJ99llu7
+
+export const getInvited = async () => {
 
 
-  const listingsRef = collection(db, 'resume');
   
-  let q = query(
-      listingsRef,
-      // where('idInvite.status', 'array-contains-any', ['true']),
-      // where('card_name', '==', 'Трубочист'),  // Рабочее
-      // where('idInvite', 'array-contains', { // Рабочее
-      //   idUser: 'YpguqFwp1YeEFrQlQeJHaRWVKar1',
-      //   numInvite: "H2YyxgD0GuhFuDK7k8JJ",
-      //   status: "view"
-      // }),
-      // where('idInvite', 'array-contains-any', ['west_coast']), // Рабочее
-      // where("idLike", "array-contains", user),
-      // where('idLike', '==', 'Ks8AALPMJ0MkLl888A9jSBr2IaC3'),
-      // where('userRef', '==', 'YpguqFwp1YeEFrQlQeJHaRWVKar1'),
-      // orderBy('timestamp', 'desc'),
-    );
+  const listingsRef = collection(db, 'resume');
+
+
+  const q = query(
+    listingsRef,
+    where('__name__', '==', 'SG9nl2Xt8TYhhJ99llu7'),
+  );
 
   const querySnap = await getDocs(q);
 
-
-  let getData = []
+  let getInfoInvite;
 
   querySnap.forEach((doc) => {
-    return getData.push({
-      id: doc.id,
-      data: doc.data()
-    })
+    return getInfoInvite = { data: doc.data() }
   });
 
-
-  let filterMas = [];
-
-  getData.forEach(item=>{
-    item.data.idInvite.length > 0 && item.data.idInvite.forEach(el=>{
-      if(el.idUser  === user){
-        filterMas.push(item);
-      }
-    })
-  })
-
-
-  return filterMas;
-
+  return getInfoInvite;
 }
-
-

@@ -55,20 +55,17 @@ const HeadProfile = (props) => {
           props.ActionFn('CHOISE_INVITE', res[0].id);
           props.ActionFn('SET_OWN_CARDS', res);
 
+          // console.log('set own cards', res)
 
           setListings(res);
-          //console.log('res', res[0].id)
-          // if (res.length === 0) {
-
-          // }
 
           setLoading(false);
         });
         return state;
       });
     });
-
-  }, []);
+    // console.log('changeInvite')
+  }, [props.choiseDeleteInvite]);
 
 
   return (
@@ -122,8 +119,13 @@ const HeadProfile = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    choiseDeleteInvite: state.popupReducer.choiseDeleteInvite,
+  }
+}
 
-export default connect(null,
+export default connect(mapStateToProps,
   {
     ActionFn
   })(HeadProfile);

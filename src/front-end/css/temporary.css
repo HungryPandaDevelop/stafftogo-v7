@@ -338,3 +338,34 @@ textarea{
 {
   background-color: #fba72a;
 }
+
+.tag-invite
+{
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.tag-invite.green{
+  border-color: green;
+}
+.tag-invite.green.active{
+  background-color: green;
+  color: #fff;
+}
+.tag-invite.red{
+  border-color: red;
+}
+.tag-invite.red.active{
+  background-color: red;
+  color: #fff;
+}
+.tag-invite.yellow{
+  border-color: #fba72a;
+}
+.tag-invite.yellow.active{
+  background-color: #fba72a;
+  color: #000;
+}

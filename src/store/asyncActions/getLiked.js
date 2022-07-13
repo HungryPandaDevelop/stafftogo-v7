@@ -21,11 +21,11 @@ import {
 import { db } from 'firebase.config';
 
 
-export const getLiked = async (name, user) => {
+export const getLiked = async (nameBase, user) => {
 
   const auth = getAuth();
   
-  const listingsRef = collection(db, name);
+  const listingsRef = collection(db, nameBase);
   
   let q = query(
       listingsRef,

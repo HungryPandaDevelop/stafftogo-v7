@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 
+import { useState } from 'react';
+
 import { connect } from 'react-redux';
+import InvitedPopup from 'pages/catalog/parts/InvitedPopup';
 
 import BtnLike from './cardsItem/BtnLike';
 import BtnInvite from './cardsItem/BtnInvite';
 import BtnOpenInvite from './cardsItem/BtnOpenInvite';
+
 
 const ListItem = (props) => {
   const {
@@ -14,11 +18,19 @@ const ListItem = (props) => {
     ownType
   } = props;
 
+  const [popupOpen, setPopupOpen] = useState(false);
+
   const listingData = listing.data;
+
+
+  const openOwnPopup = () => {
+    // console.log('open')
+    setPopupOpen(true);
+  }
 
   return (
     <div className="resume-header vacancies-item">
-
+      {popupOpen && <InvitedPopup listing={listing} />}
       <div className="main-grid">
         <div className="col-12 resume-header-roof">
           <div className="resume-update"><span>Резюме обновлено: XXX</span></div>
@@ -69,7 +81,8 @@ const ListItem = (props) => {
                 <BtnLike
                   listing={listing}
                 />
-                {props.ownCards && props.ownCards.length > 1 ? <BtnOpenInvite listing={listing} /> : <BtnInvite listing={listing} />}
+                {/* <BtnInvite listing={listing} /> */}
+                {props.ownCards && props.ownCards.length > 1 ? <BtnOpenInvite listing={listing} openOwnPopup={openOwnPopup} /> : ''}
               </div></>
             }
 

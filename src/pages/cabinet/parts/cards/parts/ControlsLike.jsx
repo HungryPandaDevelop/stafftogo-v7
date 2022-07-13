@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+
 import { addLikeAsync } from 'store/asyncActions/addLikeAsync';
 import { connect } from 'react-redux';
 
@@ -6,32 +6,17 @@ import ActionFn from 'store/actions';
 
 const ControlsLike = (props) => {
   const { listing, uid, listingType, changeInvite } = props;
-  const [likeMass, setLikeMass] = useState(false);
+
   const idElement = listing.id;
-
-
-  useEffect(() => {
-
-    if (listing.data.idLike) {
-      setLikeMass(listing.data.idLike);
-    }
-    else {
-      setLikeMass(['0']);
-    }
-
-  }, [uid]);
-
-
 
   const removeLike = () => {
 
-    likeMass && setLikeMass(likeMass.filter(item => item !== uid));
 
-    setLikeMass((state) => {
-      addLikeAsync(state, idElement, listingType);
-    });
-    console.log('changeInvite', changeInvite)
-    props.ActionFn('CHANGE_INVITE', !changeInvite);
+    const likeMass = listing.data.idLike.filter(item => item !== uid);
+    addLikeAsync(likeMass, idElement, listingType);
+
+
+    // props.ActionFn('CHANGE_INVITE', !changeInvite);
 
   }
 

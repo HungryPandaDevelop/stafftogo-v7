@@ -1,5 +1,5 @@
 
-const  popupReducer = (state = {idInvite: 0, openInvitePopup:0, changeInvite: false}, action) => {
+const  popupReducer = (state = {idInvite: 0, openInvitePopup:0, changeInvite: false, choiseDeleteInvite: false}, action) => {
 
   switch(action.type){
     case 'SHOW_POPUP':
@@ -10,6 +10,8 @@ const  popupReducer = (state = {idInvite: 0, openInvitePopup:0, changeInvite: fa
       return {...state, openInvitePopup: action.payload}
     case 'CHANGE_INVITE':
       return {...state, changeInvite: action.payload}
+    case 'DELETE_INVITE_CABINET':
+      return {...state, choiseDeleteInvite: action.payload}
     default:
       return state;
   }

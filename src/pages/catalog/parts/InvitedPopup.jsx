@@ -11,9 +11,9 @@ const InvitedPopup = (props) => {
 
   useEffect(() => {
 
-    if (props.currentItem) {
+    if (props.listing && props.listing.data.idInvite && props.listing.data.idInvite.length) {
 
-      const allInvite = props.currentItem.data.idInvite;
+      const allInvite = props.listing.data.idInvite;
 
       const currentInvite = allInvite.filter(item => item.idUser === props.uid);
 
@@ -28,64 +28,67 @@ const InvitedPopup = (props) => {
 
 
 
-  }, [props.currentItem, props.openInvitePopup])
+  }, [props.listing, props.openInvitePopup])
 
   const closePopup = () => {
     props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
-    props.ActionFn('CHANGE_INVITE', false);
+    // props.ActionFn('CHANGE_INVITE', !props.changeInvite);
   }
 
 
 
 
-  const choiseIdInvite = (id, index) => {
+  // const choiseIdInvite = (id, index) => {
 
 
-    setIsActiveIndex(id);
-    props.ActionFn('CHOISE_INVITE', id);
+  //   setIsActiveIndex(id);
+  //   props.ActionFn('CHOISE_INVITE', id); // !!!!!!
 
-    // props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
-  }
+  //   // props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
+  // }
 
   return (
     <>
-      {props.openInvitePopup.status === 1 && (
-        <div className="popup popup-invite element-show show">
-          <div className="popup-overlay"></div>
-          <div className="popup-container">
-            <div className="close-btn close-js" onClick={closePopup}></div>
+      {/* {props.openInvitePopup.status === 1 && ( */}
+      <div className="popup popup-invite element-show show">
+        <div className="popup-overlay"></div>
+        <div className="popup-container">
+          <div className="close-btn close-js" onClick={closePopup}></div>
+          <div>
+            <h2>Отклик на вакансию: {props.listing.data.card_name}</h2>
             <div>
-              <h2>Отклик на вакансию: {props.currentItem.data.card_name}</h2>
-              <div>
-                <b>Вакансии для отклика</b>
+              <b>Вакансии для отклика</b>
+            </div>
+            <ul className="invite-list-container ln">
+              {props.ownCards && props.ownCards.map((item, index) => (
+                <li
+                  className={`${isActiveIndex === item.id ? 'active' : ''} invite-list`}
+                  key={item.id}
+                // onClick={() => { choiseIdInvite(item.id, index) }}
+                >
+                  <h3><i></i><span>{item.data.card_name}</span></h3>
+
+                  {/* {console.log('BtnInvite')} */}
+                  <BtnInvite
+                    listing={props.listing}
+                    numInvite={item.id}
+                  />
+                </li>
+              ))}
+            </ul>
+            <div className="btn-container">
+              <div className="btn btn--border">
+                Отмена
               </div>
-              <ul className="invite-list-container ln">
-                {props.ownCards && props.ownCards.map((item, index) => (
-                  <li
-                    className={`${isActiveIndex === item.id ? 'active' : ''} invite-list`}
-                    key={item.id}
-                    onClick={() => { choiseIdInvite(item.id, index) }}
-                  >
-                    <h3><i></i><span>{item.data.card_name}</span></h3>
-
-                  </li>
-                ))}
-              </ul>
-              <div className="btn-container">
-                <div className="btn btn--border">
-                  Отмена
-                </div>
-                <BtnInvite
-                  listing={props.currentItem}
-                />
 
 
-              </div>
+
             </div>
           </div>
+        </div>
 
-        </div >
-      )}
+      </div >
+      {/* )} */}
     </>
   )
 }
@@ -96,9 +99,8 @@ const mapStateToProps = (state) => {
   return {
     openInvitePopup: state.popupReducer.openInvitePopup,
     ownCards: state.accountInfo.ownCards,
-    currentItem: state.popupReducer.openInvitePopup.currentItem,
     uid: uid,
-
+    changeInvite: state.popupReducer.changeInvite,
   }
 }
 
