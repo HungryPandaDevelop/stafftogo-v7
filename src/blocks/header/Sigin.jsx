@@ -41,11 +41,13 @@ const HeadProfile = (props) => {
         setTypeList('vacancies');
         setTypeName('Вакансии');
         props.ActionFn('SET_OWN_TYPE', 'resume');
+        props.ActionFn('SET_OWN_TYPE_TRUE', 'vacancies');
 
       } else {
         setTypeList('resume');
         setTypeName('Резюме');
         props.ActionFn('SET_OWN_TYPE', 'vacancies');
+        props.ActionFn('SET_OWN_TYPE_TRUE', 'resume');
       }
 
 

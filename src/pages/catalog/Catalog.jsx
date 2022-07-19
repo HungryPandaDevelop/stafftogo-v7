@@ -1,7 +1,9 @@
 import CardsList from 'pages/catalog/parts/CardsList';
 import CardsControls from 'pages/catalog/parts/cardsControls/CardsControls';
 
-function Catalog() {
+import { connect } from 'react-redux';
+
+const Catalog = (props) => {
   return (
     <div>
       <CardsControls />
@@ -11,7 +13,8 @@ function Catalog() {
       </div>
       <div className="content">
         <div className="main-full">
-          <h1>Резюме список</h1>
+          {props.listingType === 'resume' ? (<h1>Резюме список</h1>) : <h1>Вакансии список</h1>}
+
         </div>
         <div className="main-grid">
           <div className="col-10">
@@ -23,4 +26,12 @@ function Catalog() {
   )
 }
 
-export default Catalog
+const mapStateToProps = (state) => {
+  return {
+    listingType: state.listingTypeReducer,
+  }
+}
+
+
+
+export default connect(mapStateToProps)(Catalog);

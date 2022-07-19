@@ -15,7 +15,7 @@ const ListItem = (props) => {
     listing,
     link,
     listingType,
-    ownType
+    ownType,
   } = props;
 
   const [popupOpen, setPopupOpen] = useState(false);
@@ -27,10 +27,13 @@ const ListItem = (props) => {
     // console.log('open')
     setPopupOpen(true);
   }
+  const closePopup = () => {
+    setPopupOpen(false);
+  }
 
   return (
     <div className="resume-header vacancies-item">
-      {popupOpen && <InvitedPopup listing={listing} />}
+      {popupOpen && <InvitedPopup listing={listing} closePopup={closePopup} />}
       <div className="main-grid">
         <div className="col-12 resume-header-roof">
           <div className="resume-update"><span>Резюме обновлено: XXX</span></div>

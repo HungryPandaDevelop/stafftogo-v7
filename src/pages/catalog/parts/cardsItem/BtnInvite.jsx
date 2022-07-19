@@ -18,7 +18,7 @@ const BtnInvite = (props) => {
   useEffect(() => {
     const massInviteInServer = listing.data.personInvite && listing.data.personInvite.map(item => item.numInvite)
     console.log('m', massInviteInServer)
-    if (massInviteInServer.includes(numInvite)) {
+    if (massInviteInServer && massInviteInServer.includes(numInvite)) {
       setInviteActive(true);
     }
     else {

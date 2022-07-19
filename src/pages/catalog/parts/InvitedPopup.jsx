@@ -30,10 +30,10 @@ const InvitedPopup = (props) => {
 
   }, [props.listing, props.openInvitePopup])
 
-  const closePopup = () => {
-    props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
-    // props.ActionFn('CHANGE_INVITE', !props.changeInvite);
-  }
+  // const closePopup = () => {
+  // props.ActionFn('OPEN_INVITE_POPUP', { status: 0 });
+  // props.ActionFn('CHANGE_INVITE', !props.changeInvite);
+  // }
 
 
 
@@ -53,7 +53,7 @@ const InvitedPopup = (props) => {
       <div className="popup popup-invite element-show show">
         <div className="popup-overlay"></div>
         <div className="popup-container">
-          <div className="close-btn close-js" onClick={closePopup}></div>
+          <div className="close-btn close-js" onClick={props.closePopup}></div>
           <div>
             <h2>Отклик на вакансию: {props.listing.data.card_name}</h2>
             <div>
@@ -77,7 +77,7 @@ const InvitedPopup = (props) => {
               ))}
             </ul>
             <div className="btn-container">
-              <div className="btn btn--border">
+              <div className="btn btn--border" onClick={props.closePopup}>
                 Отмена
               </div>
 

@@ -8,7 +8,7 @@ import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
 
 const Invited = (props) => {
-  const { ownCards } = props;
+  const { ownCards, ownType } = props;
 
   // console.log('choiseDeleteInvite', choiseDeleteInvite)
   const contentPage = () => {
@@ -23,7 +23,7 @@ const Invited = (props) => {
                   <CardItemInvite
                     listing={listing}
                     typeInvite={0}
-
+                    ownType={ownType}
                   />
                 </div>
               ))

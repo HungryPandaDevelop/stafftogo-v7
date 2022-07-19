@@ -69,7 +69,7 @@ const MapYandex = (props) => {
     })
   };
 
-
+  console.log(listings);
   return (
     <>
       <YMaps query={{ apikey: 'fdb17d90-1d93-4d15-aa02-45c372d5e0f8' }}>
@@ -90,23 +90,25 @@ const MapYandex = (props) => {
               iconImageSize: [30, 42],
             }}
           />
+          { }
           {
             listings && listings.map((item, index) => {
               // const coords = [item.data.coords_ltd, item.data.coords_lng];
+              if (item.data.coord) {
+                const coords = item.data.coords.split('--');
+                const ltd = coords[1];
+                const lng = coords[2];
+                return (
+                  <Placemark
+                    key={index}
+                    idMarket={item.id}
+                    onClick={() => {
+                      showPopup(index, 5, [ltd, lng])
 
-              const coords = item.data.coords.split('--');
-              const ltd = coords[1];
-              const lng = coords[2];
-              return (
-                <Placemark
-                  key={index}
-                  idMarket={item.id}
-                  onClick={() => {
-                    showPopup(index, 5, [ltd, lng])
-
-                  }}
-                  defaultGeometry={[ltd, lng]} />
-              )
+                    }}
+                    defaultGeometry={[ltd, lng]} />
+                )
+              }
             })
           }
           <ZoomControl />

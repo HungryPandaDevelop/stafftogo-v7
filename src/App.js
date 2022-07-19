@@ -8,6 +8,7 @@ import PrivateRoute from 'blocks/header/PrivateRouter';
 import Footer from 'blocks/Footer';
 
 import MainPage from 'pages/MainPage';
+import Chat from 'pages/Chat';
 
 
 import Authorization from 'pages/cabinet/auth/Authorization';
@@ -52,6 +53,7 @@ const App = () => {
         <Header/>
         <Routes> 
           <Route path='/' exept element={<MainPage/>} ></Route>
+          <Route path='/chat' exept element={<Chat/>} ></Route>
           <Route path='/authorization'  element={<Authorization/>} ></Route>
           <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
           <Route path='/registration'  element={<Registration/>} ></Route>

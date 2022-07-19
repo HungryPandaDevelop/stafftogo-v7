@@ -1,5 +1,10 @@
+import { 
+  getAuth,
+  updateProfile,
+} from 'firebase/auth';
 
 import { db } from 'firebase.config';
+
 
 import {
   doc,
@@ -11,31 +16,25 @@ import { toast } from 'react-toastify';
 
 
 
-export const addInviteAsync = async (idInvite, cardsId, name, message, idMyInvite) => {
-    
+export const changeStatusMyInvite = async (nameBase, idCards, obj, typeInvite) => {
+
+
+
+
     try {
 
-      const vacanciesRef = doc(db, name, cardsId);
-      
-      let subname;
-      if(name === 'vacancies'){ 
-        subname = 'resume';
-      }else{
-        subname = 'vacancies';
-      }
-    
+      const cardsRef = doc(db, nameBase, idCards);
 
-      await updateDoc(vacanciesRef, {'idInvite': idInvite});
 
-      if(!message){
-        const vacanciesRefS = doc(db, subname, idMyInvite);
-        await updateDoc(vacanciesRefS, {'idMyInvite': idInvite[0]});
+      await updateDoc(cardsRef, {[typeInvite]: obj });
 
-        toast.success('Данные обновлены')
-      }
-      
+
+      toast.success('Данные обновлены')
     } catch (error) {
-      toast.error('Невозможно обновить вакансию')
+      toast.error('Невозможно обновить профиль')
       console.log(error)
     }
   }
+
+
+// сохранить информацию об аккаунте

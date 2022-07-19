@@ -6,7 +6,7 @@ import { addInviteAsync } from 'store/asyncActions/addInviteAsync';
 
 import { getSingleListing } from 'store/asyncActions/getSingleListing'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ActionFn from 'store/actions';
 
@@ -14,11 +14,14 @@ const ControlsLike = ({ listing, cards, listingType, ownCards, choiseDeleteInvit
 
   const [status, setStatus] = useState('');
 
+  useEffect(() => {
+
+    setStatus(cards.status);
+
+  }, []);
 
   const removeInvite = (id) => {
 
-    // console.log(id)
-    // ActionFn('DELETE_INVITE_CABINET', id);
 
     if (ownCards) {
 
@@ -28,13 +31,14 @@ const ControlsLike = ({ listing, cards, listingType, ownCards, choiseDeleteInvit
 
       let nameBase;
 
-      if (listingType === 'vacancies') {
+      if (listingType === 'vacancies') { // проверить, не пластично
         nameBase = 'resume';
       } else {
         nameBase = 'vacancies';
       }
-      getSingleListing('resume', cards.numInvite).then((res) => {
-        // console.log(res.personInvite, listing.id);
+      getSingleListing(listingType, cards.numInvite).then((res) => {
+        //  console.log(res.personInvite, listing.id);
+        console.log(res);
         let invitesForPersonCards = res.personInvite.filter(item => item.numInvite !== listing.id)
         // console.log(invitesForPersonCards);
 
@@ -89,10 +93,9 @@ const ControlsLike = ({ listing, cards, listingType, ownCards, choiseDeleteInvit
 
 
 const mapStateToProps = (state) => {
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
+
   return {
     listingType: state.listingTypeReducer,
-    uid: uid,
     choiseDeleteInvite: state.popupReducer.choiseDeleteInvite,
     ownCards: state.accountInfo.ownCards,
   }

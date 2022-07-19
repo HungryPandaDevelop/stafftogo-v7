@@ -10,12 +10,13 @@ const ListItem = (props) => {
     listing,
     onDelete,
     onEdit,
+    id
   } = props;
 
   return (
     <div className="resume-header vacancies-item">
       <div className="main-grid">
-        <div className="col-12 ">1111111111
+        <div className="col-12 ">
           <CardsUpdate update={listing.timestamp} />
         </div>
         <div className="col-2">
@@ -28,8 +29,9 @@ const ListItem = (props) => {
             text={listing.responsibilities}
             priceFrom={listing.salary_priceFrom}
             priceTo={listing.salary_priceTo}
-            link={listing.userRef}
+            id={id}
           />
+
         </div>
 
         <div className="col-5">

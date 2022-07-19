@@ -52,6 +52,7 @@ const Vacancies = (props) => {
                     onEdit={() => onEdit(listing.id)}
                     onDelete={() => deleteItem(listings, listing.id)}
                   />
+
                 </div>
               ))
             }

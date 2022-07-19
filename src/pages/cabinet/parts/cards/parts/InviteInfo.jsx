@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const LikeInfo = ({ name, id, ownType }) => {
+const LikeInfo = ({ name, id, ownTypeTrue }) => {
+
 
 
   return (
     <div className="resume-info">
       <h2>
-        <Link to={`/catalog/${ownType}/${id}`}>
+        <Link to={`/catalog/${ownTypeTrue}/${id}`}>
           {name}
         </Link>
       </h2>
@@ -17,9 +18,9 @@ const LikeInfo = ({ name, id, ownType }) => {
 
 
 const mapStateToProps = (state) => {
-  console.log(state.accountInfo.ownTypeTrue)
+  // console.log(state.accountInfo.ownTypeTrue)
   return {
-    ownType: state.accountInfo.ownType,
+    ownTypeTrue: state.accountInfo.ownTypeTrue,
     educationList: state.fieldsResume.education.options,
   }
 }

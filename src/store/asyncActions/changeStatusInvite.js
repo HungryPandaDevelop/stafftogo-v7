@@ -13,10 +13,7 @@ import { toast } from 'react-toastify';
 
 export const changeStatusInvite = async (id, nameBase, status) => {
     
-    try {
-
-     
-      
+    try {    
       let subname;
       if(nameBase === 'vacancies'){ 
         subname = 'resume';

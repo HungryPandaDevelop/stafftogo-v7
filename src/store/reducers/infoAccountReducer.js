@@ -9,6 +9,8 @@ export default (state={}, action) => {
       return {...state, ownCards: action.payload}
     case 'SET_OWN_TYPE':
       return {...state, ownType: action.payload}
+    case 'SET_OWN_TYPE_TRUE':
+      return {...state, ownTypeTrue: action.payload}
     default: 
       return state
   }

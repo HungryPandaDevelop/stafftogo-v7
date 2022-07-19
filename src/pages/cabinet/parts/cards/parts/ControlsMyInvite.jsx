@@ -1,60 +1,77 @@
 
-// import { addInviteAsync } from 'store/asyncActions/addInviteAsync';
-import { connect } from 'react-redux';
-import { useState, useEffect } from 'react';
-import ActionFn from 'store/actions';
-import { changeStatusInvite } from 'store/asyncActions/changeStatusInvite';
 
-const ControlsLike = (props) => {
+import { connect } from 'react-redux';
+
+
+import { getSingleListing } from 'store/asyncActions/getSingleListing'
+
+import { changeStatusMyInvite } from 'store/asyncActions/changeStatusMyInvite';
+
+import { useState, useEffect } from 'react';
+
+
+
+const ControlsLike = ({ item, listing, listingType, }) => {
 
   const [status, setStatus] = useState('');
 
-  const { listing, uid, listingType, changeInvite } = props;
-
-  const idElement = listing.id;
-  console.log('idElement', props.idMyInvite)
-  const removeInvite = () => {
-
-
-    const inviteMass = listing.data.idInvite.filter(item => item.idUser !== uid);
-
-    // addInviteAsync(inviteMass, idElement, listingType);
-
-    // props.ActionFn('CHANGE_INVITE', !changeInvite);
-
-  }
-
   useEffect(() => {
-    // console.log('listing.data.idMyInvite', listing.data.idMyInvite)
-    if (listing.data.idMyInvite) {
-      // setStatus(listing.data.idMyInvite[0].status);
-      setStatus(listing.data.idMyInvite.status);
 
-    }
+    setStatus(item.status);
+
   }, []);
+
+
 
   const changeStatus = (status) => {
     setStatus(status);
-    console.log('idElement', idElement, listingType, status)
-    changeStatusInvite(idElement, listingType, status);
+
+    let numCurrentCards
+    listing.data.personInvite.forEach((el, index) => {
+
+      if (el.numInvite === item.numInvite) {
+        numCurrentCards = index;
+      };
+    });
+
+
+    listing.data.personInvite[numCurrentCards].status = status;
+    changeStatusMyInvite(listingType, listing.id, listing.data.personInvite, 'personInvite');
+
+    let nameBase;
+    if (listingType === 'vacancies') {
+      nameBase = 'resume';
+    } else {
+      nameBase = 'vacancies';
+    }
+    getSingleListing(nameBase, item.numInvite).then((res) => { // проверить
+
+
+
+      let invitesForOwnCardsNum;
+      let getObj = res.ownInvite;
+      console.log('getObj', getObj)
+      getObj.forEach((el, index) => {
+        if (el.numInvite == listing.id) {
+          invitesForOwnCardsNum = index;
+        }
+      }
+      );
+      getObj[invitesForOwnCardsNum].status = status;
+
+      changeStatusMyInvite(nameBase, item.numInvite, getObj, 'ownInvite');
+
+    });
+
+
   }
+
+
+
   return (
     <div className="btn-container">
 
       <div>
-        <div
-          className="btn btn--blue btn--smaill ico-in"
-          onClick={removeInvite}
-        >
-          <i>
-            <span className="back-ico"><img src="images/icons/trash-black.svg" alt="" /></span>
-            <span className="front-ico"><img src="images/icons/trash-white.svg" alt="" /></span>
-          </i>
-          <span>
-            Удалить X
-          </span>
-        </div>
-
 
         <div
           className={`tag-invite green ${status === 'agree' ? 'active' : ''}`}
@@ -69,20 +86,20 @@ const ControlsLike = (props) => {
           onClick={() => changeStatus('view')}
         >Рассматривается</div>
       </div>
+
+      <br />
+      <div />
     </div>
   )
 }
 
 
 const mapStateToProps = (state) => {
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
   return {
     listingType: state.listingTypeReducer,
-    uid: uid,
-    changeInvite: state.popupReducer.changeInvite
   }
 }
 
 
 
-export default connect(mapStateToProps, { ActionFn })(ControlsLike);
+export default connect(mapStateToProps)(ControlsLike);

@@ -13,7 +13,7 @@ const CardItemLike = (props) => {
         <div className="col-5">
           <LikeInfo
             name={listing.data.card_name}
-            link={listing.data.userRef}
+            id={listing.id}
           />
         </div>
 

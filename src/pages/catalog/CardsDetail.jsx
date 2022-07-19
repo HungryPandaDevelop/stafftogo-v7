@@ -10,6 +10,9 @@ const CardsDetail = () => {
   const params = useParams();
 
   useEffect(() => {
+
+
+
     getSingleListing(params.catagoryName, params.elementId).then(res => {
       setListing(res);
       setLoading(false);
