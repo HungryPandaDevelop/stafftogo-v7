@@ -1,45 +1,64 @@
-import { 
-  getAuth,
-} from 'firebase/auth';
-
 import { toast } from 'react-toastify';
 
-import { useNavigate, Link } from 'react-router-dom';
-
 import {
-
   collection,
-  getDocs,
   query,
+  onSnapshot,
+  serverTimestamp,
+  addDoc,
+  updateDoc,
+  doc,
+  where
 } from 'firebase/firestore';
 
 import { db } from 'firebase.config';
 
+const getMessageRef = collection(db, 'message');
 
-export const getMessageAsync = async () => {
 
-  const listingsRef = collection(db, 'vacancies');
-  
+const sendMessage = async (roomId, user, text) => {
+  const temproomId ='11111111'; //?
+  const tempText ='lorem';
+  const tempUid = 'zzz';
+  try {
+      // await updateDoc(doc(db, 'message', temproomId), { обновить 
+      await addDoc(collection(db, 'message'), { // создать
+          uid: tempUid,
+          displayName: tempUid,
+          text: tempText,
+          timestamp: serverTimestamp(),
+      });
+      toast.success('Данные обновлены')
+  } catch (error) {
+      console.error(error);
+      toast.error(error)
+  }
+}
+
+
+const getMessageAsync = (callback) =>{
+
   let q = query(
-    listingsRef
+    getMessageRef,
+    where("interlocutors", "array-contains", "1a"),
   );
+
+  return onSnapshot(
+    q,
+    (querySnapshot) => {
   
+      const messages = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+      }));
 
-  const querySnap = await getDocs(q);
+      callback(messages);
 
-  const getData = []
-
-  querySnap.forEach((doc) => {
-    console.log(doc)
-    return getData.push({
-
-    })
   });
-
-  // return getData;
 
 }
 
+export {getMessageAsync, sendMessage};
 
 
 

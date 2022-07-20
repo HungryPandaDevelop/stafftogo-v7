@@ -3,12 +3,15 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 import Header from 'blocks/Header';
 import PrivateRoute from 'blocks/header/PrivateRouter';
 import Footer from 'blocks/Footer';
 
 import MainPage from 'pages/MainPage';
-import Chat from 'pages/Chat';
+
+import Chat from 'pages/chat/Chat';
+import ChatList from 'pages/chat/ChatList';
 
 
 import Authorization from 'pages/cabinet/auth/Authorization';
@@ -53,7 +56,7 @@ const App = () => {
         <Header/>
         <Routes> 
           <Route path='/' exept element={<MainPage/>} ></Route>
-          <Route path='/chat' exept element={<Chat/>} ></Route>
+          
           <Route path='/authorization'  element={<Authorization/>} ></Route>
           <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
           <Route path='/registration'  element={<Registration/>} ></Route>
@@ -78,6 +81,11 @@ const App = () => {
 
             </Route>
           {/*  Страницы кабинет  */}
+
+          {/*  Страницы чата  */}
+          <Route path='/chat' exept element={<Chat/>} ></Route>
+          <Route path='/chatlist' exept element={<ChatList/>} ></Route>
+          {/*  Страницы чата  */}
 
         
 

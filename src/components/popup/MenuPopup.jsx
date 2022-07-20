@@ -20,7 +20,7 @@ const MenuPopup = ({ showNavMenu, closePopup }) => {
               <li> <Link to="/catalog">Вакансии / Резюме</Link></li>
               <li> <Link to="#">О нас</Link></li>
               <li> <Link to="#">Контакты</Link></li>
-              <li> <Link to="/chat">Чат</Link></li>
+              <li> <Link to="/chatlist">Чат</Link></li>
             </ul>
           </nav>
           <div className="popup__feedback">

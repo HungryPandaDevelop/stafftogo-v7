@@ -54,7 +54,7 @@ export const getListing = async (name, user) => {
     return getData.push({
       id: doc.id,
       data: doc.data()
-    })
+    });
   });
 
   return getData;
