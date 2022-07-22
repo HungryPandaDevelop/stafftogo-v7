@@ -30,6 +30,8 @@ const HeadProfile = (props) => {
   const [typeList, setTypeList] = useState('');
   const [typeName, setTypeName] = useState('');
 
+
+
   useEffect(() => {
 
     getUserInfo().then(res => {

@@ -1,12 +1,17 @@
+import { useState, useEffect } from 'react';
+
 import { Link, useLocation, } from 'react-router-dom';
 
-import { useAuthStatus } from 'hooks/useAuthStatus';
+// import { useAuthStatus } from 'hooks/useAuthStatus';
 
 import Sigin from './Sigin';
 
 const Nav = () => {
 
-  const { loggedIn, checkingStatus } = useAuthStatus();
+
+  // const { loggedIn, checkingStatus } = useAuthStatus();
+
+
 
   const location = useLocation();
 
@@ -41,7 +46,7 @@ const Nav = () => {
 
   return (
     <>
-      {checkingStatus ? 'Loading...' : (loggedIn ? NavLogIn() : NavLogOut())}
+      {/* {checkingStatus ? 'Loading...' : (loggedIn ? NavLogIn() : NavLogOut())} */}
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Nav from 'blocks/header/Nav';
 
@@ -9,18 +9,19 @@ import MenuPopup from 'components/popup/MenuPopup';
 
 const Header = () => {
 
-  const [showNavMenu, setShowNavMenu] = useState(false);
 
-  const showPopup = () => {
-    setShowNavMenu(true);
-  }
-  const closePopup = () => {
-    setShowNavMenu(false);
-  }
+  // const [showNavMenu, setShowNavMenu] = useState(false);
+
+  // const showPopup = () => {
+  //   setShowNavMenu(true);
+  // }
+  // const closePopup = () => {
+  //   setShowNavMenu(false);
+  // }
 
   return (
     <>
-      <MenuPopup showNavMenu={showNavMenu} closePopup={closePopup} />
+      {/* <MenuPopup showNavMenu={showNavMenu} closePopup={closePopup} />
       <header >
         <div className="header-bg"></div>
         <div className="main-grid">
@@ -43,12 +44,14 @@ const Header = () => {
 
 
           <div className="sigin-container vertical-align col-4">
-            <Nav />
+          
             <a className="hamburger-btn element-btn" href="#" onClick={showPopup} ></a>
           </div>
         </div>
       </header>
-      <div className="stub"></div>
+      <div className="stub"></div> */}
+
+      <Nav />
     </>
   )
 }

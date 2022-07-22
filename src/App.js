@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import LogStatus from 'pages/LogStatus';
 
 import Header from 'blocks/Header';
 import PrivateRoute from 'blocks/header/PrivateRouter';
@@ -53,6 +54,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+        <LogStatus />
         <Header/>
         <Routes> 
           <Route path='/' exept element={<MainPage/>} ></Route>
@@ -83,7 +85,7 @@ const App = () => {
           {/*  Страницы кабинет  */}
 
           {/*  Страницы чата  */}
-          <Route path='/chat' exept element={<Chat/>} ></Route>
+          <Route path='/chat/:roomId' exept element={<Chat/>} ></Route>
           <Route path='/chatlist' exept element={<ChatList/>} ></Route>
           {/*  Страницы чата  */}
 
