@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-
 import { Link, useLocation, } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 
 // import { useAuthStatus } from 'hooks/useAuthStatus';
 
+
 import Sigin from './Sigin';
 
-const Nav = () => {
-
-
-  // const { loggedIn, checkingStatus } = useAuthStatus();
-
-
+const Nav = ({ logged }) => {
+  console.log('logged', logged)
+  const loggedIn = true;
+  const checkingStatus = false;
+  // const { loggedIn, checkingStatus, userUid, auth } = useAuthStatus();
 
   const location = useLocation();
 
@@ -46,9 +46,15 @@ const Nav = () => {
 
   return (
     <>
-      {/* {checkingStatus ? 'Loading...' : (loggedIn ? NavLogIn() : NavLogOut())} */}
+      {checkingStatus ? 'Loading auth...' : (logged ? <Sigin /> : NavLogOut())}
     </>
   )
 }
 
-export default Nav
+const mapStateToProps = (state) => {
+  return {
+    logged: state.accountInfo.logged
+  }
+}
+
+export default connect(mapStateToProps)(Nav);

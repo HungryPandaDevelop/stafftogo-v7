@@ -6,22 +6,27 @@ import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getUserInfo } from 'store/asyncActions/getUserInfo';
+import { getSingleListing } from 'store/asyncActions/getSingleListing';
 import { getListing } from 'store/asyncActions/getListing';
 
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import ActionFn from 'store/actions';
 
 const HeadProfile = (props) => {
 
-
   const auth = getAuth();
+
+  const { accountInfo } = props;
 
   const onLogout = (e) => {
     e.preventDefault();
     auth.signOut();
   }
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const [checkingStatus, setCheckingStatus] = useState(true);
 
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({});
@@ -30,46 +35,65 @@ const HeadProfile = (props) => {
   const [typeList, setTypeList] = useState('');
   const [typeName, setTypeName] = useState('');
 
-
-
   useEffect(() => {
 
-    getUserInfo().then(res => {
-      setUserInfo(res.data);
-      props.ActionFn('SET_INFO_ACCOUNT', res.data);
-      props.ActionFn('SET_INFO_UID', auth);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true);
 
-      if (res.data.typeCabinet === 'employers') {
-        setTypeList('vacancies');
-        setTypeName('Вакансии');
-        props.ActionFn('SET_OWN_TYPE', 'resume');
-        props.ActionFn('SET_OWN_TYPE_TRUE', 'vacancies');
-
-      } else {
-        setTypeList('resume');
-        setTypeName('Резюме');
-        props.ActionFn('SET_OWN_TYPE', 'vacancies');
-        props.ActionFn('SET_OWN_TYPE_TRUE', 'resume');
-      }
-
-
-
-      setTypeList((state) => {
-        getListing(state, 'user').then(res => {
-          props.ActionFn('CHOISE_INVITE', res[0].id);
-          props.ActionFn('SET_OWN_CARDS', res);
-
-          // console.log('set own cards', res)
-
-          setListings(res);
-
-          setLoading(false);
+        getSingleListing('users', auth.currentUser.uid).then(res => {
+          console.log(res);
         });
-        return state;
-      });
+      }
+      else {
+        setLoggedIn(false);
+      }
+      setCheckingStatus(false)
     });
-    // console.log('changeInvite')
-  }, [props.choiseDeleteInvite]);
+
+
+  }, []);
+
+
+  // useEffect(() => {
+
+  //   getUserInfo().then(res => {
+  //     setUserInfo(res.data);
+
+  //     props.ActionFn('SET_INFO_ACCOUNT', res.data);
+  //     props.ActionFn('SET_INFO_UID', auth);
+
+  //     if (res.data.typeCabinet === 'employers') {
+  //       setTypeList('vacancies');
+  //       setTypeName('Вакансии');
+  //       props.ActionFn('SET_OWN_TYPE', 'resume');
+  //       props.ActionFn('SET_OWN_TYPE_TRUE', 'vacancies');
+
+  //     } else {
+  //       setTypeList('resume');
+  //       setTypeName('Резюме');
+  //       props.ActionFn('SET_OWN_TYPE', 'vacancies');
+  //       props.ActionFn('SET_OWN_TYPE_TRUE', 'resume');
+  //     }
+
+
+
+  //     setTypeList((state) => {
+  //       getListing(state, 'user').then(res => {
+  //         props.ActionFn('CHOISE_INVITE', res[0].id);
+  //         props.ActionFn('SET_OWN_CARDS', res);
+
+  //         // console.log('set own cards', res)
+
+  //         setListings(res);
+
+  //         setLoading(false);
+  //       });
+  //       return state;
+  //     });
+  //   });
+  //   // console.log('changeInvite')
+  // }, [props.choiseDeleteInvite]);
 
 
   return (
@@ -81,9 +105,9 @@ const HeadProfile = (props) => {
 
       <div className="sigin-body">
         <div>
-          <em>{userInfo.name}</em>
+          {/* <em>{accountInfo.name}</em> */}
           <i className="img-cover img-avatar"
-            style={{ backgroundImage: `url(${userInfo.imgsAccount ? userInfo.imgsAccount : avatar})` }}
+          // style={{ backgroundImage: `url(${accountInfo.imgsAccount ? accountInfo.imgsAccount : avatar})` }}
           >
             <img src={avatar} alt="" />
           </i>
@@ -124,7 +148,9 @@ const HeadProfile = (props) => {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.accountInfo.accountInfo)
   return {
+    accountInfo: state.accountInfo.accountInfo,
     choiseDeleteInvite: state.popupReducer.choiseDeleteInvite,
   }
 }

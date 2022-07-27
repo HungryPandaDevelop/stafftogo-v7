@@ -61,10 +61,6 @@ const createRoom = async (callback, interlocutors, link) => {
 
   if(querySnap.docs.length === 0){
     try {
-
-
-      
-
       const sendData = {
         interlocutors: interlocutors,
         timestamp: serverTimestamp(),
@@ -81,7 +77,7 @@ const createRoom = async (callback, interlocutors, link) => {
     }
   
   }else{
-   
+
     callback([querySnap.docs[0].id, querySnap.docs[0].data()])
   }
 

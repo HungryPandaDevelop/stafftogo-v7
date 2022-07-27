@@ -1,37 +1,9 @@
-import { 
-  getAuth,
-} from 'firebase/auth';
-
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
-
-
+import { getDoc, doc, } from 'firebase/firestore';
 import { db } from 'firebase.config';
 
+export const getUserInfo = async (id) => {
+  const docRef = doc(db, 'users', id);
+  const docSnap = await getDoc(docRef);
 
-export const getUserInfo = async () => {
-
-  const auth = getAuth();
-  
-  const listingsRef = collection(db, 'users');
-
-
-  const q = query(
-    listingsRef,
-    where('email', '==', auth.currentUser.email),
-  );
-
-  const querySnap = await getDocs(q);
-
-  let getInfoAccount;
-
-  querySnap.forEach((doc) => {
-    return getInfoAccount = { data: doc.data() }
-  });
-
-  return getInfoAccount;
+  return docSnap.data();
 }
