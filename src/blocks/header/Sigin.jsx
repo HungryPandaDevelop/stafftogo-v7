@@ -9,20 +9,20 @@ import { Link } from 'react-router-dom';
 import { getSingleListing } from 'store/asyncActions/getSingleListing';
 import { getListing } from 'store/asyncActions/getListing';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+// import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import ActionFn from 'store/actions';
 
 const HeadProfile = (props) => {
 
-  const auth = getAuth();
+  // const auth = getAuth();
 
-  const { accountInfo } = props;
+  const { uid } = props;
 
-  const onLogout = (e) => {
-    e.preventDefault();
-    auth.signOut();
-  }
+  // const onLogout = (e) => {
+  //   e.preventDefault();
+  //   auth.signOut();
+  // }
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -37,20 +37,12 @@ const HeadProfile = (props) => {
 
   useEffect(() => {
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setLoggedIn(true);
+    console.log('uid', uid);
 
-        getSingleListing('users', auth.currentUser.uid).then(res => {
-          console.log(res);
-        });
-      }
-      else {
-        setLoggedIn(false);
-      }
-      setCheckingStatus(false)
+    getSingleListing('users', uid).then(res => {
+      console.log(res);
+      setUserInfo(res);
     });
-
 
   }, []);
 
@@ -105,9 +97,9 @@ const HeadProfile = (props) => {
 
       <div className="sigin-body">
         <div>
-          {/* <em>{accountInfo.name}</em> */}
+          <em>{userInfo.name}</em>
           <i className="img-cover img-avatar"
-          // style={{ backgroundImage: `url(${accountInfo.imgsAccount ? accountInfo.imgsAccount : avatar})` }}
+            style={{ backgroundImage: `url(${userInfo.imgsAccount ? userInfo.imgsAccount : avatar})` }}
           >
             <img src={avatar} alt="" />
           </i>
@@ -115,7 +107,7 @@ const HeadProfile = (props) => {
             <img src={carret} alt="" />
           </i>
         </div>
-        <div className="sigin-popup">
+        <div className="sigin-popup" style={{ 'visibility': 'visible', 'opacity': 1 }}>
           <div className="sigin-title">
             {userInfo.name}
           </div>
@@ -139,7 +131,7 @@ const HeadProfile = (props) => {
             </ul>
           </div>
           <div className="sigin-bottom">
-            <a href="#" onClick={onLogout}><div className="logout-ico"></div><span>Выйти</span></a>
+            {/* <a href="#" onClick={onLogout}><div className="logout-ico"></div><span>Выйти</span></a> */}
           </div>
         </div>
       </div>
@@ -148,10 +140,9 @@ const HeadProfile = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.accountInfo.accountInfo)
+  console.log(state.accountInfo)
   return {
-    accountInfo: state.accountInfo.accountInfo,
-    choiseDeleteInvite: state.popupReducer.choiseDeleteInvite,
+    uid: state.accountInfo.uid,
   }
 }
 

@@ -1,5 +1,5 @@
 
-export default (state={logged: false}, action) => {
+export default (state={uid: false, checkingStatus: true}, action) => {
   switch(action.type){
     case 'SET_INFO_ACCOUNT':
       return {...state, accountInfo: action.payload}
@@ -13,8 +13,9 @@ export default (state={logged: false}, action) => {
       return {...state, ownTypeTrue: action.payload}
     case 'SET_UID':
       return {...state, uid: action.payload}
-    case 'SET_STATUS_LOGGED':
-      return {...state, logged: action.payload} // ?
+    case 'CHANGE_STATUS_LOGGED': // ?
+      return {...state, checkingStatus: action.payload} 
+
     default: 
       return state
   }
