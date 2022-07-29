@@ -18,30 +18,6 @@ import {
 import { db } from 'firebase.config';
 
 
-const sendMessage = async (roomInfo, text, randomId, callback, uid) => {
-  // console.log(roomInfo)
-  try {
-    let setData = { 
-      ...roomInfo[1],
-        messages:{
-          ...roomInfo[1].messages,
-          [randomId]:{
-            text: text,
-            uid: uid,
-            timestamp: serverTimestamp(),
-          }
-        }
-    };
-
-    await setDoc(doc(db, 'message', roomInfo[0],), setData);
-      callback([roomInfo[0], setData]);
-      toast.success('Данные обновлены')
-      
-  } catch (error) {
-      console.error(error);
-      toast.error(error)
-  }
-}
 
 
 const createRoom = async (callback, interlocutors, link) => {
@@ -83,17 +59,53 @@ const createRoom = async (callback, interlocutors, link) => {
 
 }
 
-const getMyRoomMessages = (chatId, callback) => {
+const sendMessage = async (roomInfo, text, randomId, callback, uid) => {
 
-  const docRef = doc(db, 'message', chatId);
+  try {
+    let setData = { 
+      ...roomInfo[1],
+        messages:{
+          ...roomInfo[1].messages,
+          [randomId]:{
+            text: text,
+            uid: uid,
+            timestamp: serverTimestamp(),
+          }
+        }
+    };
 
-  return onSnapshot(
+    await setDoc(doc(db, 'message', roomInfo[0],), setData);
+      callback([roomInfo[0], setData]);
+      toast.success('Данные обновлены');
+      
+  } catch (error) {
+      console.error(error);
+      toast.error(error)
+  }
+}
+
+
+const getMyRoomMessages = async(chatId, callback, render) => {
+
+  // const docRef =  doc(db, 'message', chatId);
+
+  // return await onSnapshot(
+  //   query(docRef),
+  //   (onSnapshot)=>{
+  //       callback(onSnapshot.data().messages);
+      
+  //   }
+  // );
+
+  const docRef =  doc(db, 'message', chatId,);
+
+  return await onSnapshot(
     query(docRef),
     (onSnapshot)=>{
-      // console.log('get message', onSnapshot.data())
-      callback(onSnapshot.data());
+        callback(render++);
     }
   );
+
 }
 
 

@@ -10,8 +10,8 @@ import Footer from 'blocks/Footer';
 
 import MainPage from 'pages/MainPage';
 
-import Chat from 'pages/chat/Chat';
-import ChatList from 'pages/chat/ChatList';
+import Chat from 'pages/cabinet/chat/Chat';
+import ChatList from 'pages/cabinet/chat/ChatList';
 
 
 import Authorization from 'pages/cabinet/auth/Authorization';
@@ -24,15 +24,15 @@ import Account from 'pages/cabinet/Account';
 
 // Страницы кабинет Нанимателя
 
-import Vacancies from 'pages/cabinet/employers/vacancies/Vacancies';
-import VacanciesNew from 'pages/cabinet/employers/vacancies/VacanciesNew';
-import VacanciesEdit from 'pages/cabinet/employers/vacancies/VacanciesEdit';
+import Vacancies from 'pages/cabinet/vacancies/Vacancies';
+import VacanciesNew from 'pages/cabinet/vacancies/VacanciesNew';
+import VacanciesEdit from 'pages/cabinet/vacancies/VacanciesEdit';
 // Страницы кабинет Нанимателя
 
 // Страницы кабинет Соискателя
-import Resume from 'pages/cabinet/applicants/resume/Resume';
-import ResumeNew from 'pages/cabinet/applicants/resume/ResumeNew';
-import ResumeEdit from 'pages/cabinet/applicants/resume/ResumeEdit';
+import Resume from 'pages/cabinet/resume/Resume';
+import ResumeNew from 'pages/cabinet/resume/ResumeNew';
+import ResumeEdit from 'pages/cabinet/resume/ResumeEdit';
 // Страницы кабинет Соискателя
 
 import Liked from 'pages/cabinet/default/Liked';
@@ -66,7 +66,7 @@ const App = () => {
 
           {/*  Страницы кабинет  */}
             <Route path='/cabinet' element={<PrivateRoute/>}>
-              <Route path='/cabinet' element={<Account/>}></Route>
+              <Route index  element={<Account/>}></Route>
               <Route path='/cabinet/vacancies' element={<Vacancies/>}></Route>
               <Route path='/cabinet/vacancies-new' element={<VacanciesNew/>}></Route>
               <Route path='/cabinet/vacancies-edit/:elementId' element={<VacanciesEdit/>}></Route>
@@ -80,13 +80,11 @@ const App = () => {
               <Route path='/cabinet/Invited/' element={<Invited/>}></Route>
               <Route path='/cabinet/MeInvited/' element={<MeInvited/>}></Route>
 
+              <Route path='/cabinet/chat/:roomId'  element={<Chat/>} ></Route>
+              <Route path='/cabinet/chatlist' element={<ChatList/>} ></Route>
             </Route>
           {/*  Страницы кабинет  */}
 
-          {/*  Страницы чата  */}
-          <Route path='/chat/:roomId' exept element={<Chat/>} ></Route>
-          <Route path='/chatlist' exept element={<ChatList/>} ></Route>
-          {/*  Страницы чата  */}
 
         
 

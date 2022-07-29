@@ -95,11 +95,11 @@ const InvitedPopup = (props) => {
 
 
 const mapStateToProps = (state) => {
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
+
   return {
     openInvitePopup: state.popupReducer.openInvitePopup,
     ownCards: state.accountInfo.ownCards,
-    uid: uid,
+    uid: state.accountInfo.uid,
     changeInvite: state.popupReducer.changeInvite,
   }
 }

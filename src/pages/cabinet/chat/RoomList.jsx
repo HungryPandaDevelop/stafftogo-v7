@@ -26,7 +26,7 @@ const RoomList = (props) => {
 
       {rooms && rooms.map(room => (
         <div key={room.id} className={`chat-rooms ${currentRoomId === room.id ? 'active' : ''} `}>
-          <Link to={`/chat/${room.link}`} >
+          <Link to={`/cabinet/chat/${room.link}`} >
             {room.name}
           </Link>
         </div>

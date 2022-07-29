@@ -3,12 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { getListing, onDelete } from 'store/asyncActions/getListing';
 
-import CardItemVacancies from 'pages/cabinet/parts/cards/CardItemVacancies';
+import CardItemVacancies from 'pages/cabinet/vacancies/CardItemVacancies';
 
 import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
+import { connect } from 'react-redux';
 
-const Vacancies = (props) => {
+const Vacancies = ({ uid }) => {
 
   const [loading, setLoading] = useState(true);
 
@@ -18,7 +19,7 @@ const Vacancies = (props) => {
 
   useEffect(() => {
 
-    getListing('vacancies', 'user').then(res => {
+    getListing('vacancies', uid).then(res => {
 
       setListings(res);
       setLoading(false);
@@ -38,10 +39,19 @@ const Vacancies = (props) => {
     navigate(`/cabinet/vacancies-edit/${listingId}`)
   }
 
-  const contentPage = () => {
+
+  const rightSibar = () => {
     return (
-      <>
-        {!loading && listings.length > 0 && (
+      <Link className="btn btn--orange" to="/cabinet/vacancies-new">
+        Создать вакансию
+      </Link>
+    )
+  }
+
+  return (
+    <>
+      <TemplateAccount title="Мои вакансии" rightSibar={rightSibar()}>
+        {loading ? 'loading' : listings.length > 0 ? (
           <>
             {
               listings.map((listing) => (
@@ -57,22 +67,7 @@ const Vacancies = (props) => {
               ))
             }
           </>
-        )}
-      </>
-    )
-  }
-  const rightSibar = () => {
-    return (
-      <Link className="btn btn--orange" to="/cabinet/vacancies-new">
-        Создать вакансию
-      </Link>
-    )
-  }
-
-  return (
-    <>
-      <TemplateAccount title="Мои вакансии" rightSibar={rightSibar()}>
-        {contentPage()}
+        ) : 'Empty'}
       </TemplateAccount>
     </>
   )
@@ -80,4 +75,12 @@ const Vacancies = (props) => {
 
 
 
-export default Vacancies;
+const mapStateToProps = (state) => {
+
+
+  return {
+    uid: state.accountInfo.uid,
+  }
+}
+
+export default connect(mapStateToProps)(Vacancies);

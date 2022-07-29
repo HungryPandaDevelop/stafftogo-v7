@@ -15,8 +15,7 @@ import { toast } from 'react-toastify';
 
 
 
-export const setUserInfo = async (dataForm) => {
-  console.log('set', dataForm)
+export const sendUserInfo = async (dataForm, uid) => {
 
     const auth = getAuth();
 
@@ -26,7 +25,7 @@ export const setUserInfo = async (dataForm) => {
         displayName: dataForm.name
       });
 
-      const userRef = doc(db, 'users', auth.currentUser.uid);
+      const userRef = doc(db, 'users', uid);
 
 
       await updateDoc(userRef, dataForm);

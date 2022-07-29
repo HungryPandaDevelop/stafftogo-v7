@@ -11,8 +11,8 @@ export default function(){
       name: "typeCabinet", 
       label: "Тип кабинета", 
       options: [
-        {name:"Соискатель",value:"applicants"},
-        {name:"Компания", value:"employers"},
+        {name:"Соискатель",value:"resume"},
+        {name:"Компания", value:"vacancies"},
       ],
     },
   }

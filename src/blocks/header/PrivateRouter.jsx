@@ -1,15 +1,24 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthStatus } from 'hooks/useAuthStatus';
 
-const PrivateRoute = () => {
-  const { loggedIn, checkingStatus } = useAuthStatus();
+import { connect } from 'react-redux';
 
-  if (checkingStatus) {
-    return <h3>Loading...</h3>
-  }
+const PrivateRoute = ({ uid, checkingStatus }) => {
 
-  return loggedIn ? <Outlet /> : <Navigate to="/authorization" />
+
+  return (
+    <>
+      {checkingStatus ? 'Loading private route...' : (uid ? <Outlet /> : <Navigate to="/authorization" />)}
+    </>
+  )
 
 }
 
-export default PrivateRoute
+
+const mapStateToProps = (state) => {
+  return {
+    uid: state.accountInfo.uid,
+    checkingStatus: state.accountInfo.checkingStatus,
+  }
+};
+
+export default connect(mapStateToProps)(PrivateRoute);

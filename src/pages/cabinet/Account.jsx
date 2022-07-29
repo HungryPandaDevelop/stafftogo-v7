@@ -5,25 +5,43 @@ import { connect } from 'react-redux';
 import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 import RenderFormAccount from 'components/forms/RenderFormAccount';
 
-import { getUserInfo } from 'store/asyncActions/getUserInfo';
-import { setUserInfo } from 'store/asyncActions/setUserInfo';
+import { sendUserInfo } from 'store/asyncActions/sendUserInfo';
+
+import { getSingleListing } from 'store/asyncActions/getSingleListing';
 
 import ActionFn from 'store/actions';
 
-const Account = (props) => {
+const Account = ({
+  ActionFn,
+  uid,
+  dataForm,
+  fieldsEmployersAccount,
+  fieldsApplicantsAccount,
+}) => {
 
-  const [typeCabinet, setTypeCabinet] = useState('employers');
+
+  const [loadingInfo, setLoadingInfo] = useState(true);
+  const [userInfo, setUserInfo] = useState({});
+
+  const [fieldsAccount, setFieldsAccount] = useState({});
+
 
   /* получение данных пользователя */
 
   useEffect(() => {
 
-    getUserInfo().then(res => {
-      props.ActionFn('SET_INFO_ACCOUNT', res.data);
+    getSingleListing('users', uid).then(res => {
+      // console.log(res);
+      setUserInfo(res);
 
-      setTypeCabinet(res.data.typeCabinet);
+      if (res.typeCabinet === 'vacancies') {
+        setFieldsAccount(fieldsEmployersAccount);
+      } else {
+        setFieldsAccount(fieldsApplicantsAccount);
+      }
+
+      setLoadingInfo(false);
     });
-
 
   }, []);
 
@@ -33,7 +51,7 @@ const Account = (props) => {
   const onSubmitIn = () => {
     //console.log('save in account ', props.dataForm.values)
 
-    setUserInfo(props.dataForm.values);
+    sendUserInfo(dataForm.values, uid);
   }
 
 
@@ -44,23 +62,16 @@ const Account = (props) => {
   return (
     <>
       <TemplateAccount title="Учетная запись компании" >
-        {(typeCabinet === 'employers' ? (
+
+        {loadingInfo ? 'Loading account...' : (
           <RenderFormAccount
             btnSaveText="Сохранить изменения"
-            objFields={props.fieldsEmployersAccount}
-            orderFields={props.fieldsEmployersAccount.order}
-            initialValues={props.accountInfo ? props.accountInfo : null}
+            objFields={fieldsAccount}
+            orderFields={fieldsAccount.order}
+            initialValues={userInfo}
             onSubmitProps={onSubmitIn}
           />
-        ) : (
-          <RenderFormAccount
-            btnSaveText="Сохранить изменения"
-            objFields={props.fieldsApplicantsAccount}
-            orderFields={props.fieldsApplicantsAccount.order}
-            initialValues={props.accountInfo ? props.accountInfo : null}
-            onSubmitProps={onSubmitIn}
-          />
-        ))}
+        )}
 
 
       </TemplateAccount>
@@ -75,11 +86,8 @@ const mapStateToProps = (state) => {
   return {
     fieldsEmployersAccount: state.fieldsEmployersAccount, // база полей
     fieldsApplicantsAccount: state.fieldsApplicantsAccount, // база полей
-    accountInfo: state.accountInfo.accountInfo,
     dataForm: formReducer,
-    // getInfoAccount: state.getInfoAccountReducer.getInfoAccount, // полученные данные с сервера
-
-    // 
+    uid: state.accountInfo.uid,
   }
 }
 

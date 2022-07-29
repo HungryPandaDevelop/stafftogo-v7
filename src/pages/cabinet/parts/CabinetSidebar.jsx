@@ -4,20 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { getAuth } from 'firebase/auth';
 
-import { getUserInfo } from 'store/asyncActions/getUserInfo';
 
 const CabinetSidebar = () => {
-  const [typeCabinet, setTypeCabinet] = useState('employers');
 
-  useEffect(() => {
-
-    getUserInfo().then(res => {
-      setTypeCabinet(res.data.typeCabinet);
-    });
-
-  }, []);
-
-
+  const typeCabinet = 'employers';
 
   const auth = getAuth();
   const onLogout = () => {
@@ -38,6 +28,7 @@ const CabinetSidebar = () => {
     ['Мне понравилось', 'vacancies', 'liked'],
     ['Я пригласил', 'vacancies', 'invited'],
     ['Меня пригласили', 'vacancies', 'meinvited'],
+    ['Чат', 'vacancies', 'chatlist'],
     // ['Мои реквизиты', 'requisites', 'requisites'],
     // ['Мои отклики', 'respond', 'responses'],
     // ['Мои кандидаты', 'candidates', 'candidates'],
@@ -52,6 +43,7 @@ const CabinetSidebar = () => {
     ['Мне понравилось', 'vacancies', 'liked'],
     ['Я пригласил', 'vacancies', 'invited'],
     ['Меня пригласили', 'vacancies', 'meinvited'],
+    ['Чат', 'vacancies', 'chatlist'],
     // ['Мои реквизиты', 'requisites', 'requisites'],
     // ['Мои отклики', 'respond', 'responses'],
     // ['Мои кандидаты', 'candidates', 'candidates'],

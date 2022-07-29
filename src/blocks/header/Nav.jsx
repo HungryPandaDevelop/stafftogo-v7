@@ -13,11 +13,10 @@ const Nav = ({ uid, checkingStatus }) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state.accountInfo.uid', state.accountInfo.uid.uid)
   return {
     uid: state.accountInfo.uid,
     checkingStatus: state.accountInfo.checkingStatus,
   }
-}
+};
 
 export default connect(mapStateToProps)(Nav);

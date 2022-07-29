@@ -1,11 +1,3 @@
-import { 
-  getAuth,
-} from 'firebase/auth';
-
-import { toast } from 'react-toastify';
-
-import { useNavigate, Link } from 'react-router-dom';
-
 import {
   doc,
   collection,
@@ -21,19 +13,29 @@ import {
 import { db } from 'firebase.config';
 
 
-export const getListing = async (name, user) => {
+export const getListing = async (name, uid, type) => {
 
-  const auth = getAuth();
-  
+  console.log('in', name, uid)
+
   const listingsRef = collection(db, name);
   
   let q;
-  if(user){
+
+  if(uid && type==='users'){
 
     q = query(
       listingsRef,
-      where('userRef', '==', auth.currentUser.uid),
+      where('userRef', '==', uid),
       orderBy('timestamp', 'desc'),
+      // limit(2)
+    );
+  }else if(type==='like'){
+    q = query(
+      listingsRef,
+      where("idLike", "array-contains", uid),
+      //where('idLike', '==', 'Ks8AALPMJ0MkLl888A9jSBr2IaC3'),
+      // where('userRef', '==', 'YpguqFwp1YeEFrQlQeJHaRWVKar1'),
+      // orderBy('timestamp', 'desc'),
       // limit(2)
     );
   }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ActionFn from 'store/actions';
 
 const ControlsLike = (props) => {
-  const { listing, uid, listingType, changeInvite } = props;
+  const { listing, uid, listingType, ActionFn, changeList } = props;
 
   const idElement = listing.id;
 
@@ -16,7 +16,7 @@ const ControlsLike = (props) => {
     addLikeAsync(likeMass, idElement, listingType);
 
 
-    // props.ActionFn('CHANGE_INVITE', !changeInvite);
+    ActionFn('CHANGE_LIST', !changeList);
 
   }
 
@@ -43,11 +43,11 @@ const ControlsLike = (props) => {
 
 
 const mapStateToProps = (state) => {
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
+
   return {
     listingType: state.listingTypeReducer,
-    uid: uid,
-    changeInvite: state.popupReducer.changeInvite
+    uid: state.accountInfo.uid,
+    changeList: state.accountInfo.changeList,
   }
 }
 

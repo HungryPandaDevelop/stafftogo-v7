@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 import InvitedPopup from 'pages/catalog/parts/InvitedPopup';
 
-import BtnLike from './cardsItem/BtnLike';
-import BtnInvite from './cardsItem/BtnInvite';
-import BtnOpenInvite from './cardsItem/BtnOpenInvite';
+import BtnLike from './parts/cardsItem/BtnLike';
+import BtnInvite from './parts/cardsItem/BtnInvite';
+import BtnOpenInvite from './parts/cardsItem/BtnOpenInvite';
 
 
 const ListItem = (props) => {
@@ -15,7 +15,7 @@ const ListItem = (props) => {
     listing,
     link,
     listingType,
-    ownType,
+    typeCabinet,
   } = props;
 
   const [popupOpen, setPopupOpen] = useState(false);
@@ -78,7 +78,7 @@ const ListItem = (props) => {
               <li><a href="/"><i className="marker-ico--black"></i><span>Показать на карте</span></a></li>
             </ul>
 
-            {(listingType === ownType) && <>
+            {(listingType != typeCabinet) && <>
               <div className="btn-container">
 
                 <BtnLike
@@ -102,7 +102,7 @@ const mapStateToProps = (state) => {
 
   return {
     ownCards: state.accountInfo.ownCards,
-    ownType: state.accountInfo.ownType,
+    typeCabinet: state.accountInfo.typeCabinet,
   }
 }
 

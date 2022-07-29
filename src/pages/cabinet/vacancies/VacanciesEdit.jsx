@@ -7,15 +7,11 @@ import RenderFormAccount from 'components/forms/RenderFormAccount';
 
 import { useParams } from 'react-router-dom';
 
-import { getUserInfo } from 'store/asyncActions/getUserInfo';
+
+import { getSingleListing } from 'store/asyncActions/getSingleListing';
+
 import { getInfoForEdit } from 'store/asyncActions/getInfoForEdit';
 import { saveInfo } from 'store/asyncActions/saveInfo';
-
-
-// import {
-//   getInfoVacanciesAction,
-//   saveInfoVacanciesAction
-// } from 'actions'
 
 
 const VacanciesEdit = (props) => {
@@ -29,10 +25,15 @@ const VacanciesEdit = (props) => {
 
   useEffect(() => {
     // props.getInfoVacanciesAction(params.elementId);
-    getUserInfo().then(res => {
-      console.log('get-user-info', res)
+
+    getSingleListing('users', props.uid).then(res => {
+      // console.log(res);
+      setUserInfo(res);
+
       setUserInfo(res.data);
+
     });
+
     getInfoForEdit(params.elementId, 'vacancies').then(res => {
       setGetInfo(res);
     });
@@ -74,6 +75,7 @@ const mapStateToProps = (state) => {
 
   // console.log('state', state)
   return {
+    uid: state.accountInfo.uid,
     fieldsVacancies: state.fieldsVacancies, // база полей
     // getInfoAccount: state.getInfoAccountReducer.getInfoVacancies, // полученные данные с сервера
     dataForm: formReducer,

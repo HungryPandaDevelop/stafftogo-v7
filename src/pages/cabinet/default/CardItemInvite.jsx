@@ -1,9 +1,8 @@
-import ControlsMyInvite from './parts/ControlsMyInvite';
-import InviteInfo from './parts/InviteInfo';
-
+import ControlsInvite from 'pages/cabinet/parts/cards/ControlsInvite';
+import ControlsMyInvite from 'pages/cabinet/parts/cards/ControlsMyInvite';
+import InviteInfo from 'pages/cabinet/parts/cards/InviteInfo';
 import { Link } from 'react-router-dom';
-
-const CardItemMyInvite = ({ listing, ownType }) => {
+const CardItemInvite = ({ listing, typeInvite, ownType }) => {
 
 
   return (
@@ -22,11 +21,19 @@ const CardItemMyInvite = ({ listing, ownType }) => {
 
         </div>
         <div className="col-12">
-          {listing.data.personInvite && listing.data.personInvite.map((item) => {
+
+          {listing.data.ownInvite && listing.data.ownInvite.map((item) => {
             return (
               <div key={item.numInvite}>
                 <h3><Link to={`/catalog/${ownType}/${item.numInvite}`}>{item.cards_name}</Link></h3>
-                <ControlsMyInvite item={item} listing={listing} />
+                {typeInvite === 0 ?
+                  <ControlsInvite
+                    cards={item}
+                    listing={listing}
+
+                  />
+                  :
+                  <ControlsMyInvite item={item} listing={listing} />}
               </div>
             )
           })}
@@ -37,4 +44,4 @@ const CardItemMyInvite = ({ listing, ownType }) => {
   )
 }
 
-export default CardItemMyInvite;
+export default CardItemInvite;

@@ -11,13 +11,13 @@ import fieldsVacancies from 'store/reducers/base/fieldsVacancies';
 import fieldsResume from 'store/reducers/base/fieldsResume';
 import fieldsChat from 'store/reducers/base/fieldsChat';
 
+import specializationBase from "store/reducers/base/specializationBase";
+import industryBase from "store/reducers/base/industryBase";
+
 import infoAccountReducer from "./reducers/infoAccountReducer";
 
 import popupReducer from "./reducers/popupReducer";
 import alphabetListPopupReducer from "./reducers/alphabetListPopupReducer";
-
-import specializationBase from "store/reducers/base/specializationBase";
-import industryBase from "store/reducers/base/industryBase";
 
 import popupMapInfoReducer from "store/reducers/popupMapInfoReducer";
 

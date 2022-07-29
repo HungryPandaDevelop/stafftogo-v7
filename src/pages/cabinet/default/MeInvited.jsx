@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getMyInvited } from 'store/asyncActions/getMyInvited';
 
-import CardItemMyInvite from 'pages/cabinet/parts/cards/CardItemMyInvite';
+import CardItemMyInvite from 'pages/cabinet/default/CardItemMyInvite';
 
 import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 

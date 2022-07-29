@@ -2,35 +2,36 @@ import { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
-import { getLiked } from 'store/asyncActions/getLiked';
+import { getListing } from 'store/asyncActions/getListing';
 
-import CardItemLike from 'pages/cabinet/parts/cards/CardItemLike';
+import CardItemLike from 'pages/cabinet/default/CardItemLike';
 
 import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
 
-const Liked = (props) => {
+const Liked = ({ typeCabinet, uid, changeList }) => {
 
   const [loading, setLoading] = useState(true);
 
   const [listings, setListings] = useState(null);
 
   useEffect(() => {
-    console.log('ownType', props.ownType)
-    props.ownType && getLiked(props.ownType, props.uid).then(res => {
+    const typeList = typeCabinet === 'resume' ? 'vacancies' : 'resume';
+
+    getListing(typeList, uid, 'like').then(res => {
 
       setListings(res);
       setLoading(false);
 
     });
-  }, [props.changeInvite, props.ownType]);
+  }, [changeList]);
 
 
 
   const contentPage = () => {
     return (
       <>
-        {!loading && listings.length > 0 && (
+        {loading ? 'Loading' : listings.length > 0 ? (
           <>
             {
               listings.map((listing) => (
@@ -43,7 +44,7 @@ const Liked = (props) => {
               ))
             }
           </>
-        )}
+        ) : 'Empty'}
       </>
     )
   }
@@ -61,12 +62,11 @@ const Liked = (props) => {
 
 
 const mapStateToProps = (state) => {
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
+  console.log(state)
   return {
-    listingType: state.listingTypeReducer,
-    changeInvite: state.popupReducer.changeInvite,
-    ownType: state.accountInfo.ownType,
-    uid: uid
+    typeCabinet: state.accountInfo.accountInfo.typeCabinet,
+    changeList: state.accountInfo.changeList,
+    uid: state.accountInfo.uid,
   }
 }
 

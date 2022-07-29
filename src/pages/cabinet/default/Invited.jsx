@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 
-import CardItemInvite from 'pages/cabinet/parts/cards/CardItemInvite';
+import CardItemInvite from 'pages/cabinet/default/CardItemInvite';
 
 import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 

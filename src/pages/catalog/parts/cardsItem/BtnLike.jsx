@@ -51,10 +51,9 @@ const BtnLike = ({ listing, uid, listingType }) => {
 
 
 const mapStateToProps = (state) => {
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
   return {
     listingType: state.listingTypeReducer,
-    uid: uid
+    uid: state.accountInfo.uid,
   }
 }
 

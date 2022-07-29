@@ -1,11 +1,8 @@
-import ControlsLike from './parts/ControlsLike';
-import LikeInfo from './parts/LikeInfo';
+import ControlsLike from 'pages/cabinet/parts/cards/ControlsLike';
+import LikeInfo from 'pages/cabinet/parts/cards/LikeInfo';
 
-const CardItemLike = (props) => {
+const CardItemLike = ({ listing }) => {
 
-  const {
-    listing,
-  } = props;
 
   return (
     <div className="resume-header vacancies-item">

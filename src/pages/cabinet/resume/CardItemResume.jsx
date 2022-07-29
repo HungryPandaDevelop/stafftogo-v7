@@ -1,8 +1,8 @@
-import Controls from './parts/Controls';
-import UserInfo from './parts/UserInfo';
-import UserImg from './parts/UserImg';
-import CardsInfo from './parts/CardsInfo';
-import CardsUpdate from './parts/CardsUpdate';
+import Controls from 'pages/cabinet/parts/cards/Controls';
+import UserInfo from 'pages/cabinet/parts/cards/UserInfo';
+import UserImg from 'pages/cabinet/parts/cards/UserImg';
+import ResumeInfo from 'pages/cabinet/parts/cards/ResumeInfo';
+import CardsUpdate from 'pages/cabinet/parts/cards/CardsUpdate';
 
 const ListItem = (props) => {
 
@@ -10,7 +10,6 @@ const ListItem = (props) => {
     listing,
     onDelete,
     onEdit,
-    id
   } = props;
 
   return (
@@ -24,19 +23,20 @@ const ListItem = (props) => {
         </div>
 
         <div className="col-5">
-          <CardsInfo
+          <ResumeInfo
             name={listing.card_name}
-            text={listing.responsibilities}
+            expFrom={listing.ageWork_from}
+            expTo={listing.ageWork_to}
             priceFrom={listing.salary_priceFrom}
             priceTo={listing.salary_priceTo}
-            id={id}
+            education={listing.typeEducation}
+            link={listing.userRef}
           />
-
         </div>
 
         <div className="col-5">
           <UserInfo
-            name={listing.userInfo.name_company}
+            name={listing.userInfo.fio}
             phone={listing.userInfo.phones_main}
             mail={listing.userInfo.email}
           />

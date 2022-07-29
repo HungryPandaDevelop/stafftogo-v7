@@ -33,7 +33,7 @@ const Header = () => {
           <City />
           <Search />
 
-          <div className="sigin-container vertical-align col-4">
+          <div className="sigin-container vertical-align col-3">
             <Nav />
             <a className="hamburger-btn element-btn" href="#" onClick={showPopup} ></a>
           </div>

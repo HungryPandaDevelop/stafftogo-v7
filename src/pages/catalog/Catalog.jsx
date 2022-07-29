@@ -1,24 +1,57 @@
-import CardsList from 'pages/catalog/parts/CardsList';
+import { useEffect, useState } from 'react';
+
+import Breadcrumbs from 'pages/parts/Breadcrumbs';
+import PageTitle from 'pages/parts/PageTitle';
+
 import CardsControls from 'pages/catalog/parts/cardsControls/CardsControls';
 
 import { connect } from 'react-redux';
 
+import { getListing } from 'store/asyncActions/getListing';
+
+import CardsItem from 'pages/catalog/CardsItem';
+
 const Catalog = (props) => {
+
+  const [listings, setListings] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // console.log('start', props.listingType)
+    getListing(props.listingType).then(res => {
+
+      setListings(res);
+      setLoading(false);
+    });
+
+  }, [props.listingType, props.changeInvite]);
+
   return (
     <div>
       <CardsControls />
-      <div className="main-full">
-        <div className="breadcrumbs"><a href="#">Главная</a><span>/</span>
-          <a href="#">Категория</a><span>/</span><span>Резюме список</span></div>
-      </div>
+      <Breadcrumbs />
       <div className="content">
-        <div className="main-full">
-          {props.listingType === 'resume' ? (<h1>Резюме список</h1>) : <h1>Вакансии список</h1>}
+        <PageTitle title="список" />
 
-        </div>
         <div className="main-grid">
           <div className="col-10">
-            <CardsList />
+            {loading ? 'Loading list' : listings.length > 0 ? (
+              <ul className='ln'>
+                {listings.map((listing) => (
+                  <CardsItem
+                    listing={listing}
+                    key={listing.id}
+                    imgCompany={listing.imgCompany}
+                    link={`/catalog/${props.listingType}/${listing.id}`}
+                    idCategory={props.listingType}
+                    listingType={props.listingType}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <p>Нет элементов</p>
+            )}
           </div>
         </div>
       </div>

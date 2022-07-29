@@ -7,7 +7,7 @@ import setInvitedFn from './setInvitedFn'
 
 
 const BtnInvite = (props) => {
-  const { listing, listingType, numInvite, ownCards, uid, changeInvite } = props;
+  const { listing, listingType, numInvite, ownCards, uid, changeList } = props;
 
   const [inviteActive, setInviteActive] = useState(false);
 
@@ -27,7 +27,7 @@ const BtnInvite = (props) => {
     console.log('change state btn', listing.data.personInvite);
 
 
-  }, [listing])
+  }, [changeList])
 
 
   const addInvite = () => {
@@ -67,8 +67,8 @@ const BtnInvite = (props) => {
     console.log(listing.id, numInvite)
     addInviteAsync(invitesForPersonCards, listing.id, listingType, 'personInvite');
     addInviteAsync(invitesForOwnCards, numInvite, nameBase, 'ownInvite');
-    console.log(changeInvite)
-    props.ActionFn('CHANGE_INVITE', !changeInvite);
+
+    props.ActionFn('CHANGE_LIST', !changeList);
 
 
     // setTimeout(() => {
@@ -92,12 +92,12 @@ const BtnInvite = (props) => {
 
 const mapStateToProps = (state) => {
   // console.log('state', state.popupReducer.changeInvite)
-  const uid = state.accountInfo.uid && state.accountInfo.uid.currentUser.uid;
+
   return {
     ownCards: state.accountInfo.ownCards,
     listingType: state.listingTypeReducer,
-    changeInvite: state.popupReducer.changeInvite,
-    uid: uid
+    changeList: state.accountInfo.changeList,
+    uid: state.accountInfo.uid,
   }
 }
 

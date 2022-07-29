@@ -3,12 +3,12 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { getListing, onDelete } from 'store/asyncActions/getListing';
 
-import CardItemResume from 'pages/cabinet/parts/cards/CardItemResume';
+import CardItemResume from 'pages/cabinet/resume/CardItemResume';
 
 import TemplateAccount from 'pages/cabinet/parts/TemplateAccount';
 
 
-const Vacancies = (props) => {
+const Resume = (props) => {
 
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +22,7 @@ const Vacancies = (props) => {
 
       setListings(res);
       setLoading(false);
-      console.log('res', res)
+
     });
   }, []);
 
@@ -79,4 +79,4 @@ const Vacancies = (props) => {
 
 
 
-export default Vacancies;
+export default Resume;
