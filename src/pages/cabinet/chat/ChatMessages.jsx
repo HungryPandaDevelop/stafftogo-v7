@@ -9,17 +9,23 @@ import { getMyRoomMessages } from 'store/asyncActions/getMessageAsync';
 
 const ChatMessages = (props) => {
 
-  const { chatId, uid, messages } = props;
+  const { chatId, uid, render } = props;
 
-  const [updateMessages, setUpdateMessages] = useState(0);
+  const [messages, setMessages] = useState({});
 
   useEffect(() => {
 
-    getMyRoomMessages(chatId, setUpdateMessages, 0);
+    // getMyRoomMessages(chatId, setMessages);
 
-    console.log('update')
 
-  }, [updateMessages]);
+    console.log('in ')
+    getMyRoomMessages(chatId, setMessages);
+
+
+
+
+
+  }, []);
 
   const renderMessages = () => {
 
@@ -28,10 +34,10 @@ const ChatMessages = (props) => {
     if (messages) {
       result = Object.keys(messages).map((key) => messages[key]);
 
-      result[result.length - 1].timestamp && result.sort(function (a, b) {
-        var dateA = new Date(a.timestamp.seconds), dateB = new Date(b.timestamp.seconds);
-        return dateA - dateB
-      });
+      // result[result.length - 1].timestamp && result.sort(function (a, b) {
+      //   var dateA = new Date(a.timestamp.seconds), dateB = new Date(b.timestamp.seconds);
+      //   return dateA - dateB
+      // });
 
     }
     return <>

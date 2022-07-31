@@ -73,9 +73,9 @@ const sendMessage = async (roomInfo, text, randomId, callback, uid) => {
           }
         }
     };
-
+    // console.log('sendMessage', 'setData', serverTimestamp())
     await setDoc(doc(db, 'message', roomInfo[0],), setData);
-      callback([roomInfo[0], setData]);
+      // callback([roomInfo[0], setData]);
       toast.success('Данные обновлены');
       
   } catch (error) {
@@ -85,28 +85,26 @@ const sendMessage = async (roomInfo, text, randomId, callback, uid) => {
 }
 
 
-const getMyRoomMessages = async(chatId, callback, render) => {
+const getMyRoomMessages = (chatId, callback,) => {
 
-  // const docRef =  doc(db, 'message', chatId);
 
-  // return await onSnapshot(
-  //   query(docRef),
-  //   (onSnapshot)=>{
-  //       callback(onSnapshot.data().messages);
-      
-  //   }
-  // );
+  const docRef =  doc(db, 'message', chatId);
 
-  const docRef =  doc(db, 'message', chatId,);
-
-  return await onSnapshot(
+  return onSnapshot(
     query(docRef),
     (onSnapshot)=>{
-        callback(render++);
-    }
+      console.log('onSnapshot')
+        callback(onSnapshot.data().messages);
+
+    },{ includeMetadataChanges: true },
   );
 
+  // const docSnap = await getDoc(docRef);
+
+  // return docSnap.data().messages;
 }
+
+
 
 
 const getMyRooms = async (uid, callback) =>{

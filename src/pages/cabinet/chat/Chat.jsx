@@ -19,7 +19,7 @@ const Chat = ({ uid, formData, fieldsChat }) => {
 
   const [roomInfo, setRoomInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [render, setRender] = useState(false);
 
 
 
@@ -43,7 +43,9 @@ const Chat = ({ uid, formData, fieldsChat }) => {
 
 
       sendMessage(roomInfo, formData.message, unique_id, setRoomInfo, uid);
+
       formData.message = '';
+      setRender(!render)
     }
     else {
       console.log('error')
@@ -61,7 +63,8 @@ const Chat = ({ uid, formData, fieldsChat }) => {
           {loading ? 'loading' : <RoomList uid={uid} currentRoomId={roomInfo[0]} />}
         </div>
         <div className="col-8">
-          {loading ? 'loading' : <ChatMessages chatId={roomInfo[0]} uid={uid} messages={roomInfo[1].messages} />}
+
+          {loading ? 'loading' : <ChatMessages chatId={roomInfo[0]} uid={uid} render={render} />}
           <RenderFormAccount
             btnSaveText="Отправить"
             objFields={fieldsChat}
